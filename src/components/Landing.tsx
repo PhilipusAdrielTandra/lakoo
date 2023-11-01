@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Landing() {
   return (
     <div className='h-screen mx-auto flex justify-center items-center bg-white flex-col text-lakoo-red'>
@@ -9,7 +7,7 @@ function Landing() {
       </div>
       <p>Join the group and message the admins for more information</p>
       <br/>
-      <p className='font-hk'>THIS WEBSITE IS UNDER CONSTRUCTION</p>
+      <p className='font-hk'>STAY TUNED FOR THE OFFICAL LAUNCH</p>
     </div>
   );
 }
