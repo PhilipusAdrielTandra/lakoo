@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         hk: ["Hanken Grotesk", "sans-serif" ]
+        
       },
       colors: {
         "lakoo-red": "#d60103",
