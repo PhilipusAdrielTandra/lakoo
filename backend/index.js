@@ -3,8 +3,6 @@ const cors = require('cors');
 const app = express()
 const mysql = require("mysql");
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const expressJwt = require('express-jwt');
 
 
 const port = 8081
@@ -12,7 +10,6 @@ app.use(express.json())
 app.use(cors());
 
 const secret = 'alliwantforchristmasisyou'
-const checkjwt = expressJwt({secret: secretKey})
 
 const db = mysql.createConnection({
     user: 'root',
@@ -22,7 +19,7 @@ const db = mysql.createConnection({
     port: '3306'
 })
 
-app.get('/', (re, res) => {
+app.get('/', (req, res) => {
     res.send("YO WHATS POPPING ITS ME MR BACKEND")
 })
 
@@ -43,6 +40,28 @@ app.post('/register', async (req, res) => {
         }
     )
 })
+
+app.post('/registeradmin', async (req, res) => {
+    const { username, password, role } = req.body;
+    const hash = await bcrypt.hash(password, 10);
+  
+    // If no role is provided, use 'user' as the default
+    const userRole = role || 'admin';
+  
+    db.query(
+      'INSERT INTO users (username, password, role) VALUES (?, ?, ?)',
+      [username, hash, userRole],
+      (err, result) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Error registering admin' });
+        } else {
+          res.json({ success: true });
+        }
+      }
+    );
+  });
+
 
 app.get('/products', (req, res) => {
     const q = "SELECT * FROM products";
