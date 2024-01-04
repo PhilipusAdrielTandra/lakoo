@@ -5,6 +5,7 @@ const app = express()
 const mysql = require("mysql");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const multer = require('multer');
 
 const port = 8081
 app.use(express.json())
@@ -30,6 +31,9 @@ const db = mysql.createConnection({
     database: 'lakoo',
     port: '3306'
 })
+
+const storage = multer.memoryStorage();
+const upload = multer({storage: storage});
 
 app.get('/', (req, res) => {
     res.send("YO WHATS POPPING ITS ME MR BACKEND")
@@ -131,13 +135,15 @@ function authenticateToken(req, res, next) {
     })   
 }
 
-app.post('/products', authenticateToken, (req, res) => {
+app.post('/products', authenticateToken, upload.single('image'), (req, res) => {
     const { user_id, name, quality, size } = req.body;
-    console.log(req.body)
     const userId = req.user && req.user.id; // Assuming user information is stored in req.user
-
-    const q = 'INSERT INTO products (user_id, name, quality, size) VALUES (?, ?, ?, ?)';
-    db.query(q, [user_id, name, quality, size], (err, result) => {
+    if (!req.file) {
+        return res.status(400).json({error: "Image required"});
+    }
+    const image = req.file.buffer
+    const q = 'INSERT INTO products (user_id, name, quality, size, image) VALUES (?, ?, ?, ?, ?)';
+    db.query(q, [user_id, name, quality, size, image], (err, result) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Error creating product' });
