@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors');
 const app = express()
@@ -84,7 +85,9 @@ app.post('/users/login', (req, res) => {
                 const passwordMatch = await bcrypt.compare(password, user.password);
 
                 if (passwordMatch) {
-                    res.json({ success: true, message: 'Login successful' });
+                    const token = jwt.sign({ userId: user.id }, process.env.ACCESS_TOKEN_SECRET)
+
+                    res.json({ success: true, message: 'Login successful', token });
                 } else {
                     res.status(401).json({ error: 'Invalid password' });
                 }
@@ -117,12 +120,24 @@ app.post('/registeradmin', async (req, res) => {
     );
   });
 
-app.post('/products', (req, res) => {
-    const { name, description, price } = req.body;
-    const userId = req.user.id; // Assuming user information is stored in req.user
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]  
+    if (token == null) return res.status(401)
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.status(403)
+        req.user = user
+        next()
+    })   
+}
 
-    const q = 'INSERT INTO products (user_id, name, image, quality, size) VALUES (?, ?, ?, ?, ?)';
-    db.query(q, [userId, name, description, price], (err, result) => {
+app.post('/products', authenticateToken, (req, res) => {
+    const { user_id, name, quality, size } = req.body;
+    console.log(req.body)
+    const userId = req.user && req.user.id; // Assuming user information is stored in req.user
+
+    const q = 'INSERT INTO products (user_id, name, quality, size) VALUES (?, ?, ?, ?)';
+    db.query(q, [user_id, name, quality, size], (err, result) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Error creating product' });
@@ -132,7 +147,7 @@ app.post('/products', (req, res) => {
     });
 });
 
-app.get('/products', (req, res) => {
+app.get('/products', authenticateToken, (req, res) => {
     const q = "SELECT * FROM products";
     db.query(q, (err, data) => {
         if (err) {
