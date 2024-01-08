@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT({
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -8,8 +9,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        hk: ["Hanken Grotesk", "sans-serif" ]
-        
+        hk: ["Hanken Grotesk", "sans-serif"]
       },
       colors: {
         "lakoo-red": "#d60103",
@@ -20,4 +20,4 @@ export default {
     '@tailwindcss/forms',
     "tw-elements-react/dist/plugin.cjs"
   ],
-}
+});
