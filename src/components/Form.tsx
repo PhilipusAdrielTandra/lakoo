@@ -12,7 +12,7 @@
   }
   ```
 */
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
+import { PhotoIcon } from '@heroicons/react/24/solid';
 import Select from 'react-select';
 
 const style_opt = [
