@@ -59,7 +59,7 @@ export default function Signin() {
           ```
         */}
         {/*<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">*/}
-
+        <div className="bg-cover bg-no-repeat bg-center h-screen" style={{backgroundImage: 'url("src/assets/images/background.jpeg")'}}>
         {/* BIG CONTAINER */}
         <div className="flex items-center justify-center h-screen">
           <div className="mx-auto max-w-full lg:max-w-screen-xl rounded-lg overflow-hidden bg-white shadow-lg md:shadow-xl">
@@ -174,23 +174,24 @@ export default function Signin() {
             <div className="flex h-full flex-1 flex-col float-right w-1/2">
               <Carousel className="flex-1">
                 <img
-                  src="src/assets/images/testcarousel.png"
+                  src="src/assets/images/carousel1.png"
                   alt="image 1"
                   className="h-full w-full object-cover"
                 />
                 <img
-                  src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
+                  src="src/assets/images/carousel2.png"
                   alt="image 2"
                   className="h-full w-full object-cover"
                 />
                 <img
-                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+                  src="src/assets/images/carousel3.png"
                   alt="image 3"
                   className="h-full w-full object-cover"
                 />
               </Carousel>
             </div>
           </div>
+        </div>
         </div>
       </>
     )
