@@ -269,7 +269,7 @@ app.post('/products', authenticateToken, upload.single('image'), async (req, res
 });
 
 
-app.get('/products', async (req, res) => {
+app.get('/products', authenticateAdminToken, async (req, res) => {
     try {
         const products = await db.collection("products").find({}).toArray();
         res.json(products);
@@ -330,6 +330,37 @@ function authenticateToken(req, res, next) {
     })   
 }
 
+function authenticateAdminToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (token == null) {
+        console.error('Authentication error: Token missing');
+        return res.status(401).send('Unauthorized: Token missing');
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
+        if (err) {
+            console.error('Authentication error:', err);
+            return res.status(403).send('Forbidden: Invalid token');
+        }
+
+        try {
+            const admin = await db.collection("admins").findOne({ _id: new ObjectId(user.userId) });
+
+            if (admin) {
+                req.user = user;
+                next();
+            } else {
+                console.error('Authentication error: User is not an admin');
+                res.status(403).send('Forbidden: User is not an admin');
+            }
+        } catch (error) {
+            console.error('Error fetching admin:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
+}
 function generateAcessToken(req, res, next) {
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15s'})
 }
