@@ -24,13 +24,35 @@ const checkAdmin = (req, res, next) => {
     }
   };
 
-const db = mysql.createConnection({
-    user: 'root',
-    host: 'localhost',
-    password: '',
-    database: 'lakoo',
-    port: '3306'
-})
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://lakoo:m11qtMGGNQfipd61@cluster0.v8z4dqx.mongodb.net/?retryWrites=true&w=majority";
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+}
+});
+
+async function run() {
+try {
+    // Connect the client to the server    (optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+} finally {
+    // Ensures that the client will close when you finish/error
+    // await client.close();
+}
+}
+run().catch(console.dir);
+
+const db = client.db("lakoo");
+const productsCollection = db.collection("products");
+const adminsCollection = db.collection("admins");
 
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
@@ -39,70 +61,51 @@ app.get('/', (req, res) => {
     res.send("YO WHATS POPPING ITS ME MR BACKEND")
 })
 
-app.get('/users', (req, res) => {
-    const q = "SELECT * FROM users";
-    db.query(q, (err, data) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).json(err);
-        }
-        return res.json(data)
-    })
-})
-
+app.get('/users', async (req, res) => {
+    try {
+        const users = await db.collection("users").find({}).toArray();
+        res.json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 app.post('/users', async (req, res) => {
-    const {username, password} = req.body;
+    const { username, password } = req.body;
     const hash = await bcrypt.hash(password, 10);
 
-    db.query(
-        'INSERT INTO users (username, password) VALUES (?, ?)',
-        [username, hash],
-        (err, result) => {
-            if (err) {
-                console.error(err);
-                res.status(500).json ({error: "Error registering user"});
-            } else {
-                res.json({ success: true })
-            }
-        }
-    )
-})
+    try {
+        await db.collection("users").insertOne({ username, password: hash });
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error registering user' });
+    }
+});
 
-app.post('/users/login', (req, res) => {
+app.post('/users/login', async (req, res) => {
     const { username, password } = req.body;
 
-    if (!username || !password) {
-        return res.status(400).json({ error: 'Username and password are required' });
-    }
+    try {
+        const user = await db.collection("users").findOne({ username });
 
-    const q = "SELECT * FROM users WHERE username = ?";
-    db.query(q, [username], async (err, results) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: 'Internal Server Error' });
-        }
+        if (user) {
+            const passwordMatch = await bcrypt.compare(password, user.password);
 
-        if (results.length > 0) {
-            const user = results[0];
-            try {
-                const passwordMatch = await bcrypt.compare(password, user.password);
-
-                if (passwordMatch) {
-                    const token = jwt.sign({ userId: user.id }, process.env.ACCESS_TOKEN_SECRET)
-
-                    res.json({ success: true, message: 'Login successful', token });
-                } else {
-                    res.status(401).json({ error: 'Invalid password' });
-                }
-            } catch (bcryptError) {
-                console.error(bcryptError);
-                res.status(500).json({ error: 'Internal Server Error' });
+            if (passwordMatch) {
+                const token = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET);
+                res.json({ success: true, message: 'Login successful', token });
+            } else {
+                res.status(401).json({ error: 'Invalid password' });
             }
         } else {
             res.status(404).json({ error: 'User not found' });
         }
-    });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 app.post('/registeradmin', async (req, res) => {
@@ -135,34 +138,34 @@ function authenticateToken(req, res, next) {
     })   
 }
 
-app.post('/products', authenticateToken, upload.single('image'), (req, res) => {
-    const { user_id, name, quality, size } = req.body;
-    const userId = req.user && req.user.id; // Assuming user information is stored in req.user
-    if (!req.file) {
-        return res.status(400).json({error: "Image required"});
-    }
-    const image = req.file.buffer
-    const q = 'INSERT INTO products (user_id, name, quality, size, image) VALUES (?, ?, ?, ?, ?)';
-    db.query(q, [user_id, name, quality, size, image], (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Error creating product' });
-        } else {
-            res.json({ success: true, productId: result.insertId });
-        }
-    });
-});
+// app.post('/products', authenticateToken, upload.single('image'), (req, res) => {
+//     const { user_id, name, quality, size } = req.body;
+//     const userId = req.user && req.user.id; // Assuming user information is stored in req.user
+//     if (!req.file) {
+//         return res.status(400).json({error: "Image required"});
+//     }
+//     const image = req.file.buffer
+//     const q = 'INSERT INTO products (user_id, name, quality, size, image) VALUES (?, ?, ?, ?, ?)';
+//     db.query(q, [user_id, name, quality, size, image], (err, result) => {
+//         if (err) {
+//             console.error(err);
+//             res.status(500).json({ error: 'Error creating product' });
+//         } else {
+//             res.json({ success: true, productId: result.insertId });
+//         }
+//     });
+// });
 
-app.get('/products', authenticateToken, (req, res) => {
-    const q = "SELECT * FROM products";
-    db.query(q, (err, data) => {
-        if (err) {
-            console.log(err);
-            return res.json(err);
-        }
-        return res.json(data);
-    })
-})
+// app.get('/products', authenticateToken, (req, res) => {
+//     const q = "SELECT * FROM products";
+//     db.query(q, (err, data) => {
+//         if (err) {
+//             console.log(err);
+//             return res.json(err);
+//         }
+//         return res.json(data);
+//     })
+// })
 
 app.listen(port, () => {
     console.log(`Running on port ${port}`)

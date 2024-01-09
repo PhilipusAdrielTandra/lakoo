@@ -17,12 +17,6 @@ import { TEInput, TERipple } from "tw-elements-react";
 import { Carousel } from "@material-tailwind/react";
 
 export default function Example() {
-    const carouselImages = [
-      "src/assets/images/carousel.png",
-      "src/assets/images/shoe.jpg",
-      "src/assets/images/shirt.jpg"
-    ];
-
     return (
       <>
         {/*
