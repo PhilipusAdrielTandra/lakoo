@@ -157,15 +157,43 @@ app.post('/products', authenticateToken, upload.single('image'), async (req, res
             userId, // Associate the product with the authenticated user
         });
 
-        if (result.insertedCount === 1) {
+        if (result.acknowledged && result.acknowledged === true) {
             console.log('Product inserted successfully');
             res.json({ success: true, message: 'Product inserted successfully' });
         } else {
             console.error('Failed to insert product', result);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({ error: 'Failed to insert product' });
         }
     } catch (err) {
         console.error('Error inserting product:', err);
+        res.status(500).json({ error: 'Internal Server Error', details: err.message });
+    }
+});
+
+
+app.get('/products', async (req, res) => {
+    try {
+        const products = await db.collection("products").find({}).toArray();
+        res.json(products);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/products/:productId', async (req, res) => {
+    const productIdToFind = req.params.productId;
+
+    try {
+        const product = await db.collection("products").findOne({ _id: new ObjectId(productIdToFind) });
+
+        if (product) {
+            res.json(product);
+        } else {
+            res.status(404).json({ error: 'Product not found' });
+        }
+    } catch (err) {
+        console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
