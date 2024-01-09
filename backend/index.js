@@ -58,6 +58,8 @@ app.get('/', (req, res) => {
     res.send("YO WHATS POPPING ITS ME MR BACKEND")
 })
 
+
+
 app.get('/users', async (req, res) => {
     try {
         const users = await db.collection("users").find({}).toArray();
@@ -73,12 +75,64 @@ app.post('/users', async (req, res) => {
     const hash = await bcrypt.hash(password, 10);
 
     try {
-        await db.collection("users").insertOne({ username, password: hash, address, number, firstname, lastname, city, state, zip});
+        await db.collection("users").insertOne({ username, password: hash, address, number, firstname, lastname, city, state, zip });
         res.json({ success: true });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Error registering user' });
+        res.status(500).json({ error: 'Error registering admin' });
     }
+});
+
+app.post('/users/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = await db.collection("users").findOne({ username });
+
+        if (user) {
+            const passwordMatch = await bcrypt.compare(password, user.password);
+
+            if (passwordMatch) {
+                const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
+                const refreshToken = jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+
+                // Store the refresh token in a secure way (e.g., HttpOnly cookie)
+                res.cookie('refreshToken', refreshToken, {
+                    httpOnly: true,
+                    sameSite: 'None',
+                    secure: true,
+                    maxAge: 24 * 60 * 60 * 1000, // 1 day
+                });
+
+                res.json({ success: true, message: 'Login successful', accessToken, refreshToken });
+            } else {
+                res.status(401).json({ error: 'Invalid password' });
+            }
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.post('/users/refresh-token', async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+        return res.status(401).json({ error: 'Unauthorized: Refresh token missing' });
+    }
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            console.error(err);
+            return res.status(403).json({ error: 'Forbidden: Invalid refresh token' });
+        }
+
+        const accessToken = jwt.sign({ userId: user.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
+        res.json({ success: true, accessToken });
+    });
 });
 
 app.post('/admins', async (req, res) => {
@@ -218,7 +272,6 @@ app.get('/products/:productId', async (req, res) => {
 
 app.delete('/products/:productId', authenticateToken, async (req, res) => {
     const productIdToDelete = req.params.productId;
-
     try {
         const authenticatedUser = await db.collection("users").findOne({ _id: new ObjectId(req.user.userId) });
         if (authenticatedUser) {
@@ -248,6 +301,10 @@ function authenticateToken(req, res, next) {
         req.user = user
         next()
     })   
+}
+
+function generateAcessToken(req, res, next) {
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15s'})
 }
 
 app.listen(port, () => {
