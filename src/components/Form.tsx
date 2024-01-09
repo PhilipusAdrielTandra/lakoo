@@ -23,10 +23,30 @@ const style_opt = [
   // Add more options as needed
 ];
 
+const brand_opt = [
+  { value: 'gucci', label: 'Gucci' },
+  { value: 'dickies', label: 'Dickies' },
+  // Add more options as needed
+]
+
+const category_opt = [
+  { value: 'tops', label: 'Tops' },
+  { value: 'bottom', label: 'Bottom' },
+  { value: 'jacket', label: 'Jacket' },
+  // Add more options as needed
+]
+
+const condition_opt = [
+  { value: 'brandnew', label: 'Brand New - unused with original packaging or tags' },
+  { value: 'likenew', label: 'Like New - mint condition pre-owned or new without tags' },
+  { value: 'used', label: 'Used - lightly used but no noticeable flaws' },
+  // Add more options as needed
+]
+
 export default function Example() {
   return (
     <form className="form m-11">
-      <div className="space-y-12">
+      <div className="px-24">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">List an item</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -87,7 +107,7 @@ export default function Example() {
                   id="about"
                   name="about"
                   rows={3}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                   defaultValue={''}
                 />
               </div>
@@ -112,68 +132,95 @@ export default function Example() {
           </div>
         </div>
 
-        <div className="border-b border-gray-900/10 pb-12">
+        <div className="border-b border-gray-900/10 pb-12 py-10">
           <h2 className="text-base font-semibold leading-7 text-gray-900">Information</h2>
           {/* <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p> */}
 
-          <div className="sm:col-span-3">
+          <div className="sm:col-span-3 py-3">
               <label htmlFor="category" className="block text-sm font-medium leading-6 text-gray-900">
                 Category
               </label>
               <div className="mt-2">
-                <select
+                {/*<select
                   id="category"
-                  name="cateogory"
+                  name="category"
                   autoComplete="category-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                 >
                   <option>Tops</option>
                   <option>Bottoms</option>
                   <option>Jacket</option>
-                  {/* add more here */}
                 </select>
+                */}
+                <Select
+                  id="style"
+                  name="style"
+                  options={category_opt}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  maxMenuHeight={150}
+                  closeMenuOnSelect={false}
+                />
               </div>
           </div>
 
-          <div className="sm:col-span-3">
+          <div className="sm:col-span-3 py-3">
               <label htmlFor="brand" className="block text-sm font-medium leading-6 text-gray-900">
                 Brand
               </label>
               <div className="mt-2">
-                <select
+                {/* <select
                   id="brand"
                   name="brand"
                   autoComplete="brand-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                 >
                   <option>No brand</option>
                   <option>Gucci</option>
                   <option>Dickies</option>
-                  {/* add more here */}
                 </select>
+                */}
+                <Select
+                  id="style"
+                  name="style"
+                  options={brand_opt}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  maxMenuHeight={150}
+                  closeMenuOnSelect={false}
+                />
               </div>
           </div>
 
-          <div className="sm:col-span-3">
-              <label htmlFor="brand" className="block text-sm font-medium leading-6 text-gray-900">
+          <div className="sm:col-span-3 py-3">
+              <label htmlFor="condition" className="block text-sm font-medium leading-6 text-gray-900">
                 Condition
               </label>
               <div className="mt-2">
-                <select
+                {/* <select
                   id="condition"
                   name="condition"
                   autoComplete="condition-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                 >
                   <option>Brand new - unused with original packaging or tags</option>
                   <option>Like new - mint condition pre-owned or new without tags</option>
                   <option>Used - lightly used but no noticeable flaws</option>
-                  {/* add more here */}
-                </select>
+                </select> */}
+
+                <Select
+                  id="style"
+                  name="style"
+                  options={condition_opt}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  maxMenuHeight={150}
+                  closeMenuOnSelect={false}
+                />  
               </div>
           </div>
 
-          <div className="sm:col-span-3">
+          <div className="sm:col-span-3 py-3">
             <label htmlFor="style" className="block text-sm font-medium leading-6 text-gray-900">
               Style
             </label>
@@ -192,9 +239,9 @@ export default function Example() {
             <p className="mt-3 text-sm leading-6 text-gray-600">Pick relevant tags to describe this item's style. Add up to 3.</p>
           </div>
 
-          <div className="sm:col-span-3">
+          <div className="sm:col-span-3 py-3">
               <label htmlFor="item-price" className="block text-sm font-medium leading-6 text-gray-900">
-                Item price
+                Item Price
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -210,6 +257,7 @@ export default function Example() {
                     placeholder="0,00"
                   />
                 </div>
+                <p className="mt-3 text-sm leading-6 text-gray-600">This is only a starting price. Admins can negotiate based on the quality.</p>
               </div>
             </div>
 
@@ -321,7 +369,7 @@ export default function Example() {
           </div>
         </div>
 
-        <div className="border-b border-gray-900/10 pb-12">
+        <div className="border-b border-gray-900/10 pb-12 py-10">
           <h2 className="text-base font-semibold leading-7 text-gray-900">Notifications</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             We'll always let you know about important changes.
@@ -424,13 +472,13 @@ export default function Example() {
         </div>
       </div>
 
-      <div className="mt-6 flex items-center justify-end gap-x-6">
+      <div className="mt-6 flex items-center justify-end gap-x-6 px-24">
         <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
           Cancel
         </button>
         <button
           type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Save
         </button>
