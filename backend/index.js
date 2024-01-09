@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(cors());
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://lakoo:m11qtMGGNQfipd61@cluster0.v8z4dqx.mongodb.net/?retryWrites=true&w=majority";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -73,23 +73,20 @@ app.post('/users', async (req, res) => {
     }
 });
 
-app.delete('/users/:userId', authenticateToken, async (req, res) => {
+app.delete('/users/:userId', async (req, res) => {
     const userIdToDelete = req.params.userId;
 
     try {
-        // Check if the authenticated user has the privilege to delete users (admin check)
-        const authenticatedUser = await db.collection("users").findOne({ _id: ObjectId(req.user.userId) });
-        if (authenticatedUser && authenticatedUser.isAdmin) {
-            // Delete the user by their ID
-            const result = await db.collection("users").deleteOne({ _id: ObjectId(userIdToDelete) });
+        // Create an instance of ObjectId using the 'new' keyword
+        const objectId = new ObjectId(userIdToDelete);
 
-            if (result.deletedCount === 1) {
-                res.json({ success: true, message: 'User deleted successfully' });
-            } else {
-                res.status(404).json({ error: 'User not found' });
-            }
+        // Delete the user by their ID
+        const result = await db.collection("users").deleteOne({ _id: objectId });
+
+        if (result.deletedCount === 1) {
+            res.json({ success: true, message: 'User deleted successfully' });
         } else {
-            res.status(403).json({ error: 'Permission denied. Only admins can delete users.' });
+            res.status(404).json({ error: 'User not found' });
         }
     } catch (err) {
         console.error(err);
@@ -124,41 +121,48 @@ app.post('/users/login', async (req, res) => {
 
 app.post('/products', authenticateToken, upload.array('images', 5), async (req, res) => {
     const { description, category, brand, condition, style, price, phoneNumber, address } = req.body;
-    
+
     const images = req.files.map(file => {
-      const filename = file.originalname;
-      const filePath = path.join(__dirname, 'uploads', filename);
-  
-      // Save the image to your server's filesystem
-      file.buffer // Assuming you are using memory storage in multer
-        ? require('fs').writeFileSync(filePath, file.buffer)
-        : file.mv(filePath);
-  
-      // Store the URL or path in the database
-      return {
-        filename: filename,
-        url: `/uploads/${filename}`, // Adjust based on your setup
-      };
+        const filename = file.originalname;
+        const filePath = path.join(__dirname, 'uploads', filename);
+
+        // Save the image to your server's filesystem
+        file.buffer // Assuming you are using memory storage in multer
+            ? require('fs').writeFileSync(filePath, file.buffer)
+            : file.mv(filePath);
+
+        // Store the URL or path in the database
+        return {
+            filename: filename,
+            url: `/uploads/${filename}`, // Adjust based on your setup
+        };
     });
-  
+
     try {
-      const userId = req.user.userId;
-  
-      // Find the user by ID
-      const user = await db.collection("users").findOne({ _id: ObjectId(userId) });
-  
-      // Add the new product to the user's products array
-      user.products.push({ images, description, category, brand, condition, style, price, phoneNumber, address });
-  
-      // Save the updated user document
-      await db.collection("users").updateOne({ _id: ObjectId(userId) }, { $set: { products: user.products } });
-  
-      res.json({ success: true, message: 'Product added successfully' });
+        const userId = req.user.userId;
+
+        const productData = {
+            userId: new ObjectId(userId),
+            images,
+            description,
+            category,
+            brand,
+            condition,
+            style,
+            price,
+            phoneNumber,
+            address,
+        };
+
+        await productsCollection.insertOne(productData);
+
+        res.json({ success: true, message: 'Product added successfully' });
     } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal Server Error' });
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-  });
+});
+
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]  
