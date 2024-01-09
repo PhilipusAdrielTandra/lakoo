@@ -1,16 +1,7 @@
 import axios from "axios";
 
-/**
- * Axios instance module
- * @module AxiosInstance
- * @author ferrylinton
- */
-
-/**
- * Creating axios instance
- */
 const apiClient = axios.create({
-    baseURL: import.meta.env.VITE_API_HOST,
+    baseURL: 'http://localhost:8081',
     timeout: 15000,
     headers: {
         'Content-Type': 'application/json',

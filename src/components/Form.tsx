@@ -12,6 +12,7 @@
   }
   ```
 */
+import React, { useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import Select from 'react-select';
 
@@ -44,8 +45,59 @@ const condition_opt = [
 ]
 
 export default function Example() {
+  const [formData, setFormData] = useState({
+      name:'',
+      description: '',
+      category: '',
+      brand: '',
+      condition: '',
+      style: [],
+      price: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      photos: '',
+    });
+
+   const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  
+  const handleSelectChange = (name, value) => {
+      setFormData({ ...formData, [name]: value });
+  };
+  
+  const handleFileChange = (e) => {
+      setFormData({ ...formData, photos: [...e.target.files] });
+  };
+  
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      const payload = {
+          ...formData,
+          style: formData.style.map(s => s.value)
+      };
+
+      try {
+          const response = await fetch('http://localhost:8081/products', { // Replace with your actual API endpoint
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+          });
+          const data = await response.json();
+          alert("Success.")
+      } catch (error) {
+          console.error('Error submitting form:', error);
+          // Handle error - show an error message
+      }
+    };
+
+  
+  
   return (
-    <form className="form m-11">
+    <form className="form m-11" onSubmit={handleSubmit}>
       <div className="px-24">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">List an item</h2>
@@ -69,7 +121,7 @@ export default function Example() {
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-red-800 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-red-500"
                     >
                       <span>Upload a file</span>
-                      <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                      <input id="photos" name="photos" type="file" onChange={handleFileChange} className="sr-only" />
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
@@ -78,24 +130,24 @@ export default function Example() {
               </div>
             </div>
 
-            {/* <div className="sm:col-span-4">
+            <div className="sm:col-span-4">
               <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                Username
+                Item name
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span>
                   <input
                     type="text"
-                    name="username"
-                    id="username"
-                    autoComplete="username"
+                    name="item-name"
+                    id="item-name"
+                    autoComplete="item-name"
+                    value={formData.name}
+                    onChange={handleChange}
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="janesmith"
                   />
                 </div>
               </div>
-            </div> */}
+            </div>
 
             {/* DESCRIPTION */}
             <div className="col-span-full">
@@ -107,6 +159,8 @@ export default function Example() {
                   id="about"
                   name="about"
                   rows={3}
+                  value={formData.description}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                   defaultValue={''}
                 />
@@ -156,6 +210,7 @@ export default function Example() {
                   id="style"
                   name="style"
                   options={category_opt}
+                  onChange={(selectedOption) => handleSelectChange('category', selectedOption)}
                   className="basic-multi-select"
                   classNamePrefix="select"
                   maxMenuHeight={150}
@@ -184,6 +239,7 @@ export default function Example() {
                   id="style"
                   name="style"
                   options={brand_opt}
+                  onChange={(selectedOption) => handleSelectChange('brand', selectedOption)}
                   className="basic-multi-select"
                   classNamePrefix="select"
                   maxMenuHeight={150}
@@ -209,9 +265,10 @@ export default function Example() {
                 </select> */}
 
                 <Select
-                  id="style"
-                  name="style"
+                  id="condition"
+                  name="condition"
                   options={condition_opt}
+                  onChange={(selectedOption) => handleSelectChange('condition', selectedOption)}
                   className="basic-multi-select"
                   classNamePrefix="select"
                   maxMenuHeight={150}
@@ -229,6 +286,7 @@ export default function Example() {
                 id="style"
                 name="style"
                 options={style_opt}
+                onChange={(selectedOption) => handleSelectChange('condition', selectedOption)}
                 isMulti
                 className="basic-multi-select"
                 classNamePrefix="select"
@@ -248,11 +306,13 @@ export default function Example() {
                   <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">IDR</span>
                   <input
                     type="text"
-                    name="item-price"
-                    id="item-price"
-                    autoComplete="item-price"
+                    name="price"
+                    id="price"
+                    autoComplete="price"
                     pattern="[0-9]*"
                     inputMode="numeric"
+                    value={formData.price}
+                    onChange={handleChange}
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="0,00"
                   />
@@ -315,6 +375,8 @@ export default function Example() {
                 <input
                   type="text"
                   name="street-address"
+                  value={formData.address}
+                  onChange={handleChange}
                   id="street-address"
                   autoComplete="street-address"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -329,6 +391,8 @@ export default function Example() {
               <div className="mt-2">
                 <input
                   type="text"
+                  value={formData.city}
+                  onChange={handleChange}
                   name="city"
                   id="city"
                   autoComplete="address-level2"
@@ -346,6 +410,8 @@ export default function Example() {
                   type="text"
                   name="region"
                   id="region"
+                  value={formData.state}
+                  onChange={handleChange}
                   autoComplete="address-level1"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -360,6 +426,8 @@ export default function Example() {
                 <input
                   type="text"
                   name="postal-code"
+                  value={formData.zip}
+                  onChange={handleChange}
                   id="postal-code"
                   autoComplete="postal-code"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -374,102 +442,8 @@ export default function Example() {
           <p className="mt-1 text-sm leading-6 text-gray-600">
             We'll always let you know about important changes.
           </p>
-
-          <div className="mt-10 space-y-10">
-            <fieldset>
-              <legend className="text-sm font-semibold leading-6 text-gray-900">By Email</legend>
-              <div className="mt-6 space-y-6">
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="comments"
-                      name="comments"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="comments" className="font-medium text-gray-900">
-                      Comments
-                    </label>
-                    <p className="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="candidates"
-                      name="candidates"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="candidates" className="font-medium text-gray-900">
-                      Candidates
-                    </label>
-                    <p className="text-gray-500">Get notified when a candidate applies for a job.</p>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="offers"
-                      name="offers"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="offers" className="font-medium text-gray-900">
-                      Offers
-                    </label>
-                    <p className="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset>
-              <legend className="text-sm font-semibold leading-6 text-gray-900">Push Notifications</legend>
-              <p className="mt-1 text-sm leading-6 text-gray-600">These are delivered via SMS to your mobile phone.</p>
-              <div className="mt-6 space-y-6">
-                <div className="flex items-center gap-x-3">
-                  <input
-                    id="push-everything"
-                    name="push-notifications"
-                    type="radio"
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                  <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900">
-                    Everything
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-3">
-                  <input
-                    id="push-email"
-                    name="push-notifications"
-                    type="radio"
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                  <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900">
-                    Same as email
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-3">
-                  <input
-                    id="push-nothing"
-                    name="push-notifications"
-                    type="radio"
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                  <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">
-                    No push notifications
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-          </div>
         </div>
+  
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6 px-24">
