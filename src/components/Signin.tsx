@@ -20,11 +20,13 @@ import { useNavigate } from 'react-router-dom';
 export default function Signin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [validationMessage, setValidationMessage] = useState('');
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+
     try {
       const response = await fetch('http://localhost:8081/users/login', {
         method: 'POST',
@@ -34,6 +36,7 @@ export default function Signin() {
         body: JSON.stringify({ username, password }),
       });
       const data = await response.json();
+      
       if (data.success) {
         console.log('Login successful:', data);
         // Handle login success (e.g., store the token, redirect, etc.)
@@ -41,11 +44,13 @@ export default function Signin() {
       } else {
         console.error('Login failed:', data.error);
         // Handle login failure
+        setValidationMessage(data.error || "Login failed. Username/password incorrect.");
       }
     } catch (error) {
       console.error('Error:', error);
       // Handle network error
     }
+    
   };
 
     return (
@@ -89,7 +94,11 @@ export default function Signin() {
                         type="username"
                         autoComplete="username"
                         required
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={username}
+                        onChange={(e) => {
+                          setUsername(e.target.value);
+                          setValidationMessage('');
+                        }}
                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -113,7 +122,11 @@ export default function Signin() {
                         type="password"
                         autoComplete="current-password"
                         required
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value)
+                          setValidationMessage('');
+                        }}
                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -128,6 +141,11 @@ export default function Signin() {
                     </button>
                   </div>
                 </form>
+
+                 {/* Display validation message */}
+                 {validationMessage && (
+                      <div className="text-red-600">{validationMessage}</div>
+                  )}
       
                 <p className="mt-10 text-center text-sm text-gray-500">
                   Not a member?{' '}

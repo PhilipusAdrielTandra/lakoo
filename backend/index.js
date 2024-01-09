@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const multer = require('multer');
 const path = require('path');
+const axios = require('axios');
 
 const port = 8081
 app.use(express.json())
@@ -39,6 +40,8 @@ try {
 }
 run().catch(console.dir);
 
+
+// ------------ SERVICES ------------
 const db = client.db("lakoo");
 const productsCollection = db.collection("products");
 const adminsCollection = db.collection("admins");
@@ -161,7 +164,8 @@ app.post('/products', authenticateToken, upload.array('images', 5), async (req, 
   });
 
 
-// AUTHENTICATION STUFF
+
+//-------------------- AUTHENTICATION STUFF -------------------- 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]  
