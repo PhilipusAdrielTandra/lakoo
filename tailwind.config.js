@@ -4,7 +4,8 @@ module.exports = withMT({
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/tw-elements-react/dist/js/**/*.js"
+    "./node_modules/tw-elements-react/dist/js/**/*.js",
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {
@@ -18,6 +19,7 @@ module.exports = withMT({
   },
   plugins: [
     '@tailwindcss/forms',
-    "tw-elements-react/dist/plugin.cjs"
+    "tw-elements-react/dist/plugin.cjs",
+    require('flowbite/plugin')
   ],
 });
