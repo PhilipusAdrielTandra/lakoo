@@ -6,3 +6,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn {
+        @apply transition duration-300 ease-out;
+        @apply text-center px-2 py-1 uppercase font-semibold;
+        @apply border shadow-[0_1px_4px_0_rgba(0,0,0,0.4)];
+    }
+
+    .btn-primary {
+        @apply border-blue-600 bg-blue-600/80 text-blue-50;
+        @apply hover:bg-blue-600;
+    }
+
+    .btn-secondary {
+        @apply border-gray-600 bg-gray-600/80 text-gray-50;
+        @apply hover:bg-gray-600;
+    }
+
+    .btn-danger {
+        @apply border-red-600 bg-red-600/80 text-red-50;
+        @apply hover:bg-red-600;
+    }
+
+    .table-detail {
+        @apply border-collapse border border-slate-300;
+    }
+
+    .table-detail th,
+    .table-detail td {
+        @apply py-3 px-5 align-middle border border-slate-300;
+    }
+
+    .table-detail th {
+        @apply text-right;
+    }
+    
+}

@@ -73,11 +73,11 @@ app.get('/users', async (req, res) => {
 });
 
 app.post('/users', async (req, res) => {
-    const { username, password, address, number, firstname, lastname } = req.body;
+    const { username, password, address, number, firstname, lastname, city, state, zip } = req.body;
     const hash = await bcrypt.hash(password, 10);
 
     try {
-        await db.collection("users").insertOne({ username, password: hash, address, number, firstname, lastname});
+        await db.collection("users").insertOne({ username, password: hash, address, number, firstname, lastname, city, state, zip});
         res.json({ success: true });
     } catch (err) {
         console.error(err);

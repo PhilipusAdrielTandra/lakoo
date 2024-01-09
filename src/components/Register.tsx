@@ -1,38 +1,51 @@
 import React, { useState } from "react";
-import { Carousel } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom'; 
 
 export default function Register() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmpass, setConfirmPass] = useState('');
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [number, setNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
-
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+        address: '',
+        number: '',
+        firstname: '',
+        lastname: '',
+        city: '',
+        state: '',
+        zip: ''
+    })
+    
+  const [confirmPass, setConfirmPass] = useState('');
   const navigate = useNavigate();
+
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+};
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+
+    if (formData.password !== confirmPass) {
+        alert("Passwords do not match.");
+        return;
+    }
+
     try {
-      const response = await fetch('http://localhost:8081/users/login', {
+      const response = await fetch('http://localhost:8081/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(formData),
       });
       const data = await response.json();
+
       if (data.success) {
-        console.log('Login successful:', data);
+        console.log('Registration successful:', data);
         // Handle login success (e.g., store the token, redirect, etc.)
-        navigate('/list-item');
+        alert("Registration successful. Please login to continue.");
+        navigate('/');
       } else {
-        console.error('Login failed:', data.error);
+        console.error('Registration failed:', data.error);
         // Handle login failure
       }
     } catch (error) {
@@ -76,7 +89,9 @@ export default function Register() {
                                         type="username"
                                         autoComplete="username"
                                         required
-                                        onChange={(e) => setUsername(e.target.value)}
+                                        value={formData.username}
+                                        onChange={handleChange}
+                                        // onChange={(e) => setUsername(e.target.value)}
                                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -96,7 +111,9 @@ export default function Register() {
                                         type="password"
                                         autoComplete="current-password"
                                         required
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        // onChange={(e) => setPassword(e.target.value)}
                                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -134,7 +151,9 @@ export default function Register() {
                                     type="firstname"
                                     autoComplete="firstname"
                                     required
-                                    onChange={(e) => setFirstName(e.target.value)}
+                                    value={formData.firstname}
+                                    onChange={handleChange}
+                                    // onChange={(e) => setFirstName(e.target.value)}
                                     className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                                 </div>
@@ -153,7 +172,9 @@ export default function Register() {
                                         type="lastname"
                                         autoComplete="lastname"
                                         required
-                                        onChange={(e) => setLastName(e.target.value)}
+                                        value={formData.lastname}
+                                        onChange={handleChange}
+                                        // onChange={(e) => setLastName(e.target.value)}
                                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -173,7 +194,9 @@ export default function Register() {
                                         type="number"
                                         autoComplete="number"
                                         required
-                                        onChange={(e) => setNumber(e.target.value)}
+                                        value={formData.number}
+                                        onChange={handleChange}
+                                        // onChange={(e) => setNumber(e.target.value)}
                                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -193,7 +216,9 @@ export default function Register() {
                                         type="address"
                                         autoComplete="address"
                                         required
-                                        onChange={(e) => setAddress(e.target.value)}
+                                        value={formData.address}
+                                        onChange={handleChange}
+                                        // onChange={(e) => setAddress(e.target.value)}
                                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -212,7 +237,9 @@ export default function Register() {
                                         type="city"
                                         autoComplete="city"
                                         required
-                                        onChange={(e) => setCity(e.target.value)}
+                                        value={formData.city}
+                                        onChange={handleChange}
+                                        // onChange={(e) => setCity(e.target.value)}
                                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
@@ -231,7 +258,9 @@ export default function Register() {
                                     type="state"
                                     autoComplete="state"
                                     required
-                                    onChange={(e) => setState(e.target.value)}
+                                    value={formData.state}
+                                    onChange={handleChange}
+                                    // onChange={(e) => setState(e.target.value)}
                                     className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                                 </div>
@@ -250,7 +279,9 @@ export default function Register() {
                                         type="zip"
                                         autoComplete="zip"
                                         required
-                                        onChange={(e) => setZip(e.target.value)}
+                                        value={formData.zip}
+                                        onChange={handleChange}
+                                        // onChange={(e) => setZip(e.target.value)}
                                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
