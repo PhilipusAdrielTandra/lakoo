@@ -12,11 +12,42 @@
   }
   ```
 */
-import React from "react";
-import { TEInput, TERipple } from "tw-elements-react";
+import React, { useState } from "react";
+// import { TEInput, TERipple } from "tw-elements-react";
 import { Carousel } from "@material-tailwind/react";
+import { useNavigate } from 'react-router-dom'; 
 
-export default function Example() {
+export default function Signin() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:8081/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        console.log('Login successful:', data);
+        // Handle login success (e.g., store the token, redirect, etc.)
+        navigate('/list-item');
+      } else {
+        console.error('Login failed:', data.error);
+        // Handle login failure
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle network error
+    }
+  };
+
     return (
       <>
         {/*
@@ -46,7 +77,7 @@ export default function Example() {
               </div>
       
               <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
+                <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                       Username
@@ -58,6 +89,7 @@ export default function Example() {
                         type="username"
                         autoComplete="username"
                         required
+                        onChange={(e) => setUsername(e.target.value)}
                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -81,6 +113,7 @@ export default function Example() {
                         type="password"
                         autoComplete="current-password"
                         required
+                        onChange={(e) => setPassword(e.target.value)}
                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>

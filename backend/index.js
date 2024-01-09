@@ -159,6 +159,9 @@ app.post('/products', authenticateToken, upload.array('images', 5), async (req, 
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+
+// AUTHENTICATION STUFF
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]  

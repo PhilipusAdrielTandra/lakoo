@@ -10,8 +10,8 @@ function App() {
       <div>
         <Routes>
           {/* <Route path="/" element={<Landing/>}/> */}
-          <Route path="/" element={<><Header /><Form /></>}/>
-          <Route path="/signin" element={<Signin/>}/>
+          <Route path="/list-item" element={<><Header /><Form /></>}/>
+          <Route path="/" element={<Signin/>}/>
         </Routes>
       </div>
     </Router>

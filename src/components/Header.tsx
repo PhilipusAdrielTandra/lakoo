@@ -1,17 +1,30 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const navigation = [
   { name: 'List an item', href: '#', current: true },
   { name: 'Track progress', href: '#', current: false }
 ]
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Example() {
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    // Clear the token from storage
+    localStorage.removeItem('token'); // or sessionStorage.removeItem('token');
+
+    // Update application state here if needed
+    // For example, update a global user context or redux state
+
+    // Redirect to the login page or home page
+    navigate('/'); // Replace '/login' with the path to your login page
+};
   return (
     <Disclosure as="nav" className="bg-black">
       {({ open }) => (
@@ -120,8 +133,8 @@ export default function Example() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            onClick={handleSignOut}
                           >
                             Sign out
                           </a>
