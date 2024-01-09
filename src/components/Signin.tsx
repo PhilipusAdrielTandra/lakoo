@@ -49,14 +49,14 @@ export default function Example() {
                 <form className="space-y-6" action="#" method="POST">
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                      Email address
+                      Username
                     </label>
                     <div className="mt-2">
                       <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        autoComplete="email"
+                        id="username"
+                        name="username"
+                        type="username"
+                        autoComplete="username"
                         required
                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
@@ -103,14 +103,14 @@ export default function Example() {
                   </a>
                 </p>
 
-                {/* <!-- Divider --> */}
+                {/* <!-- Divider -->
                 <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
                     <p className="mx-4 mb-0 text-center font-semibold dark:text-neutral-200">
                       OR
                     </p>
                 </div>
 
-                {/* <!-- Social login buttons --> */}
+                {/* <!-- Social login buttons -->
                 <TERipple rippleColor="light" className="w-full">
                     <a
                       className="mb-3 flex w-full items-center justify-center rounded border border-red-500 px-7 pb-2.5 pt-3 text-center text-sm font-medium uppercase leading-normal text-red-500 transition duration-150 ease-in-out hover:bg-gray-100 hover:border-red-600 hover:text-red-600 focus:bg-gray-100 focus:border-red-600 focus:text-red-600 focus:outline-none focus:ring-0 active:bg-gray-200 active:border-red-700 active:text-red-700 dark:border-red-800 dark:hover:bg-gray-200 dark:focus:bg-gray-200 dark:hover:border-red-700 dark:focus:border-red-700 dark:active:bg-gray-300 dark:active:border-red-900"
@@ -118,7 +118,6 @@ export default function Example() {
                       href="#!"
                       role="button"
                     >
-                      {/* <!-- Google --> */}
                       {<svg className="h-6 w-6 mr-2" 
                         xmlns="http://www.w3.org/2000/svg" 
                         width="800px" 
@@ -134,7 +133,7 @@ export default function Example() {
                       </svg>}
                       Continue with Google
                     </a>
-                </TERipple>
+                </TERipple> */}
               </div>
             </div>
 
