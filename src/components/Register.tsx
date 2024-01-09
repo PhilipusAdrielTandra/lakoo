@@ -112,7 +112,7 @@ export default function Register() {
                                     <input
                                         id="confirmpass"
                                         name="confirmpass"
-                                        type="confirmpass"
+                                        type="password"
                                         autoComplete="confirmpass"
                                         required
                                         onChange={(e) => setConfirmPass(e.target.value)}
@@ -270,7 +270,7 @@ export default function Register() {
         
                     <p className="mt-5 text-center text-sm text-gray-500">
                     Already a member?{' '}
-                    <a href="#" className="font-semibold leading-6 text-red-900 hover:text-red-600">
+                    <a href="/" className="font-semibold leading-6 text-red-900 hover:text-red-600">
                         Sign in here
                     </a>
                     </p>

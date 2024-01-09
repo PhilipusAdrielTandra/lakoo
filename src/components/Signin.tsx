@@ -131,8 +131,8 @@ export default function Signin() {
       
                 <p className="mt-10 text-center text-sm text-gray-500">
                   Not a member?{' '}
-                  <a href="#" className="font-semibold leading-6 text-red-900 hover:text-red-600">
-                    Sign up here
+                  <a href="/register" className="font-semibold leading-6 text-red-900 hover:text-red-600">
+                    Register here
                   </a>
                 </p>
 
