@@ -46,7 +46,7 @@ export default function AdminSignin() {
         localStorage.setItem('token', accessToken);
   
         // Handle login success (e.g., store the token, redirect, etc.)
-        navigate('/list-item');
+        navigate('/adminview');
       } else {
         console.error('Login failed:', data.error);
         // Handle login failure
