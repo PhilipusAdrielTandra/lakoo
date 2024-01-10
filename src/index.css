@@ -30,7 +30,7 @@
     }
 
     .table-detail {
-        @apply border-collapse border;
+        @apply border-collapse border w-full;
     }
 
     .table-detail th,

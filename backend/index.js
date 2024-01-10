@@ -325,7 +325,7 @@ app.get('/products-2', authenticateAdminToken, async (req, res) => {
 });
 
 
-app.put('/products/:productId/status', authenticateAdminToken, async (req, res) => {
+app.put('/products/:productId/status', async (req, res) => {
     const { productId } = req.params;
     const { status } = req.body;
 

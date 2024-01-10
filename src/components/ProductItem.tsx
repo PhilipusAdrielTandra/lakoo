@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import clsx from "clsx";
-import { Link } from 'react-router-dom';
 
 const updateProductStatus = async (productId, newStatus) => {
     try {
@@ -67,14 +66,34 @@ const Modal = ({ product, onClose }) => {
                         </tr>
                         <tr>
                             <th>Status</th>
-                            <label className="flex items-center space-x-2 ml-5 mt-3">
+                            <label>
+                            <input 
+                                type="radio" 
+                                value="rejected" 
+                                checked={product.status === 'Rejected'} 
+                                onChange={handleStatusChange}
+                            />
+                            Rejected
+                            </label>
+
+                            <label>
+                            <input 
+                                type="radio" 
+                                value="pending" 
+                                checked={product.status === 'Pending'} 
+                                onChange={handleStatusChange}
+                            />
+                            Pending
+                            </label>
+                            
+                            <label>
                                 <input 
-                                    type="checkbox" 
-                                    checked={status} 
+                                    type="radio" 
+                                    value="accepted" 
+                                    checked={product.status === 'Accepted'} 
                                     onChange={handleStatusChange}
-                                    className="form-checkbox h-5 w-5 text-green-600" 
                                 />
-                                <span>{status ? 'Accepted' : 'Rejected'}</span>
+                                Accepted
                             </label>
                         </tr>
                         <tr>
@@ -83,7 +102,7 @@ const Modal = ({ product, onClose }) => {
                         </tr>
                         <tr>
                             <th>Images</th>
-                            <td>{product.createdAt}</td>
+                            <td>{product.img}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -110,7 +129,7 @@ export default function ProductItem({ product }) {
 
     return (
         <tr className="border-b">
-                <td className={clsx('p-2', { 'line-through': product.status })}>
+                <td className={clsx('p-2')}>
                     {product.name}
                 </td>
                 <td className="p-2">
