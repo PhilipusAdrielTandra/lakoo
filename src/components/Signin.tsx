@@ -1,20 +1,5 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import React, { useState } from "react";
-// import { TEInput, TERipple } from "tw-elements-react";
-import Carousel  from "../components/Carousel"
+import Carousel from "../components/Carousel";
 import { useNavigate } from 'react-router-dom'; 
 
 export default function Signin() {
@@ -59,14 +44,6 @@ export default function Signin() {
 
     return (
       <>
-        {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
         {/*<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">*/}
         <div className="bg-cover bg-no-repeat bg-center h-screen" style={{backgroundImage: 'url("src/assets/images/background.jpeg")'}}>
         {/* BIG CONTAINER */}
@@ -114,7 +91,7 @@ export default function Signin() {
                         Password
                       </label>
                       <div className="text-sm">
-                        <a href="#" className="font-semibold text-red-900 hover:text-red-600">
+                        <a href="#" className="font-semibold text-red-700 hover:text-red-900 hover:underline">
                           Forgot password?
                         </a>
                       </div>
@@ -153,13 +130,13 @@ export default function Signin() {
       
                 <p className="mt-10 text-center text-sm text-gray-500">
                   Not a member?{' '}
-                  <a href="/register" className="font-semibold leading-6 text-red-900 hover:text-red-600">
+                  <a href="/register" className="font-semibold leading-6 text-red-700 hover:text-red-900 hover:underline">
                     Register here
                   </a>
                 </p>
                 <p className="mt-5 text-center text-sm text-gray-500">
                   Are you an Admin?{' '}
-                  <a href="/admin" className="font-semibold leading-6 text-red-900 hover:text-red-600">
+                  <a href="/admin" className="font-semibold leading-6 text-red-700 hover:text-red-900 hover:underline">
                     Sign in
                   </a>
                 </p>
@@ -169,23 +146,6 @@ export default function Signin() {
             {/* CAROUSEL SIDE */}
             <div className="hidden lg:flex flex-1 flex-col w-1/2">
                   <Carousel/>
-              {/* <Carousel className="flex-1">
-                <img
-                  src="src/assets/images/carousel1.png"
-                  alt="image 1"
-                  className="h-full w-full object-cover"
-                />
-                <img
-                  src="src/assets/images/carousel2.png"
-                  alt="image 2"
-                  className="h-full w-full object-cover"
-                />
-                <img
-                  src="src/assets/images/carousel3.png"
-                  alt="image 3"
-                  className="h-full w-full object-cover"
-                />
-              </Carousel> */}
             </div>
           </div>
         </div>
