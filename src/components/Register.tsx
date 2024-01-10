@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom'; 
+import { NumericFormat } from 'react-number-format';
 import Select from 'react-select';
 
 export default function Register() {
@@ -63,7 +64,6 @@ export default function Register() {
     }))
     : [];
 
-    
     const [confirmPass, setConfirmPass] = useState('');
     const navigate = useNavigate();
 
@@ -250,7 +250,15 @@ export default function Register() {
                                 </label>
 
                                 <div className="mt-2">
-                                    <input
+                                    <NumericFormat 
+                                        value={formData.number}
+                                        prefix="+62" 
+                                        type="tel"
+                                        onValueChange={() => handleChange}
+                                        required
+                                        className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    />
+                                    {/* <input
                                         id="number"
                                         name="number"
                                         type="number"
@@ -262,7 +270,7 @@ export default function Register() {
                                         onChange={handleChange}
                                         // onChange={(e) => setNumber(e.target.value)}
                                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
             
