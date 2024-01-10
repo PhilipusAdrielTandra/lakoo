@@ -95,10 +95,10 @@ const ProductForm = () => {
     condition: '',
     style: '',
     price: '',
-    status: '',
+    status: 'Pending',
     image: null,
   });
-
+  const [column, setColumn] = useState(""); 
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,6 +116,13 @@ const ProductForm = () => {
     setFormData({
       ...formData,
       image: e.target.files[0],
+    });
+  };
+
+  const handleSelectChange = (name, selectedOption) => {
+    setFormData({
+      ...formData,
+      [name]: selectedOption,
     });
   };
 
@@ -159,7 +166,6 @@ const ProductForm = () => {
           <p className="mt-1 text-sm leading-6 text-gray-600">
             This information will be displayed publicly so be careful what you share.
           </p>
-
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="col-span-full">
       {/* <label>
@@ -178,6 +184,8 @@ const ProductForm = () => {
             rows={1} 
             className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
             defaultValue={''}
+            value={formData.name}
+            onChange={handleInputChange}
           />
         </div>
       </div>
@@ -194,10 +202,12 @@ const ProductForm = () => {
         <div className="mt-2">
           <textarea
             id="about"
-            name="about"
+            name="description"
             rows={3}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
             defaultValue={''}
+            value={formData.description}
+            onChange={handleInputChange}
           />
         </div>
         <p className="mt-3 text-sm leading-6 text-gray-600">e.g. small grey Nike t-shirt, only worn a few times.</p>
@@ -215,12 +225,13 @@ const ProductForm = () => {
         <div className="mt-2">
             <Select
               id="style"
-              name="style"
+              name="category"
               options={category_opt}
               className="basic-multi-select"
               classNamePrefix="select"
               maxMenuHeight={150}
               closeMenuOnSelect={false}
+              onChange={(selectedOption) => handleSelectChange("category", selectedOption)}
             />
         </div>
       </div>
@@ -236,12 +247,13 @@ const ProductForm = () => {
           <div className="mt-2">
             <Select
               id="style"
-              name="style"
+              name="brand"
               options={brand_opt}
               className="basic-multi-select"
               classNamePrefix="select"
               maxMenuHeight={150}
               closeMenuOnSelect={false}
+              onChange={(selectedOption) => handleSelectChange("brand", selectedOption)}
             />
         </div>
       </div>
@@ -257,12 +269,13 @@ const ProductForm = () => {
         <div className="mt-2">
           <Select
             id="style"
-            name="style"
+            name="condition"
             options={condition_opt}
             className="basic-multi-select"
             classNamePrefix="select"
             maxMenuHeight={150}
             closeMenuOnSelect={false}
+            onChange={(selectedOption) => handleSelectChange("condition", selectedOption)}
           />  
         </div>
       </div>
@@ -285,6 +298,7 @@ const ProductForm = () => {
             classNamePrefix="select"
             maxMenuHeight={150}
             closeMenuOnSelect={false}
+            onChange={(selectedOption) => handleSelectChange("style", selectedOption)}
           />
         </div>
         <p className="mt-3 text-sm leading-6 text-gray-600">Pick relevant tags to describe this item's style. Add up to 3.</p>
@@ -303,13 +317,15 @@ const ProductForm = () => {
               <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">IDR</span>
               <input
                 type="text"
-                name="item-price"
+                name="price"
                 id="item-price"
                 autoComplete="item-price"
                 pattern="[0-9]*"
                 inputMode="numeric"
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 placeholder="0,00"
+                value={formData.price}
+                onChange={handleInputChange}
               />
             </div>
             <p className="mt-3 text-sm leading-6 text-gray-600">This is only a starting price. Admins can negotiate based on the quality.</p>
