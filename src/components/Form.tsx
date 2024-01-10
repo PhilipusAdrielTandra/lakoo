@@ -113,6 +113,7 @@ const ProductForm = () => {
     });
   };
 
+
   const handleImageChange = (e) => {
     setFormData({
       ...formData,
@@ -136,6 +137,26 @@ const ProductForm = () => {
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    const checkUserStatus = async () => {
+      try {
+        const token = localStorage.getItem('accessToken');
+
+        if (!token) {
+          // Redirect to login page or handle unauthorized access
+          navigate('/');
+          return;
+        }
+
+        // You can include additional logic to check user credentials if needed
+
+      } catch (error) {
+        console.error('Error checking user status:', error);
+      }
+    };
+    checkUserStatus();
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
