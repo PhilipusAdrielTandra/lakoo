@@ -126,6 +126,12 @@ const ProductForm: React.FC = () => {
   });
   const [isUser, setIsUser] = useState(false);
 
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
+    const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTermsAccepted(e.target.checked);
+    };
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -140,6 +146,11 @@ const ProductForm: React.FC = () => {
   const history = useNavigate();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    if (!termsAccepted) {
+      alert('Please accept the terms and conditions.');
+      return;
+  }
 
     const data = new FormData();
     data.append('name', formData.name);
@@ -372,6 +383,21 @@ const ProductForm: React.FC = () => {
               </div>
             </div>
         </div>
+      </div>
+
+      {/* Terms and Conditions Checkbox */}
+      <div className="mt-6 px-24">
+                <label className="flex items-center space-x-2">
+                    <input 
+                        type="checkbox" 
+                        checked={termsAccepted} 
+                        onChange={handleTermsChange}
+                        className="form-checkbox h-5 w-5 text-red-600" 
+                    />
+                    <span className="text-sm text-gray-700">
+                        I accept that the information is correct and I give consent to provide information.
+                    </span>
+                </label>
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6 px-24">
