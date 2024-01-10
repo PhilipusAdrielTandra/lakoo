@@ -60,7 +60,7 @@ app.get('/', (req, res) => {
 
 
 
-app.get('/users', async (req, res) => {
+app.get('/users', authenticateAdminToken, async (req, res) => {
     try {
         const users = await db.collection("users").find({}).toArray();
         res.json(users);
@@ -70,7 +70,7 @@ app.get('/users', async (req, res) => {
     }
 });
 
-app.post('/users', async (req, res) => {
+app.post('/users',  async (req, res) => {
     const { username, password, address, number, firstname, lastname, city, state, zip } = req.body;
     const hash = await bcrypt.hash(password, 10);
 
@@ -234,9 +234,11 @@ app.post('/products', authenticateToken, upload.single('image'), async (req, res
     console.log('Request Body:', req.body);
     console.log('Request File:', req.file);
 
-    const { name, description, category, brand, condition, style, price } = req.body;
+    const { name, description, category, brand, condition, style, price, status } = req.body;
     const img = req.file.filename;
     const userId = new ObjectId(req.user.userId); 
+    const createdAt = new Date(); 
+
 
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded' });
@@ -251,8 +253,10 @@ app.post('/products', authenticateToken, upload.single('image'), async (req, res
             condition,
             style,
             price,
+            status,
             img, 
             userId, 
+            createdAt, 
         });
 
         if (result.acknowledged && result.acknowledged === true) {
@@ -279,7 +283,8 @@ app.get('/products', authenticateAdminToken, async (req, res) => {
     }
 });
 
-app.get('/products/:productId', async (req, res) => {
+
+app.get('/products/:productId', authenticateAdminToken, async (req, res) => {
     const productIdToFind = req.params.productId;
 
     try {
@@ -297,12 +302,15 @@ app.get('/products/:productId', async (req, res) => {
 });
 
 
-app.delete('/products/:productId', authenticateToken, async (req, res) => {
+
+app.delete('/products/:productId', authenticateAdminToken, async (req, res) => {
     const productIdToDelete = req.params.productId;
+
     try {
-        const authenticatedUser = await db.collection("users").findOne({ _id: new ObjectId(req.user.userId) });
-        if (authenticatedUser) {
-            const result = await db.collection("products").deleteOne({ _id: new ObjectId(productIdToDelete), userId: new ObjectId(req.user.userId) });
+        const authenticatedAdmin = await db.collection("admins").findOne({ _id: new ObjectId(req.user.userId) });
+
+        if (authenticatedAdmin) {
+            const result = await db.collection("products").deleteOne({ _id: new ObjectId(productIdToDelete) });
 
             if (result.deletedCount === 1) {
                 res.json({ success: true, message: 'Product deleted successfully' });
@@ -362,7 +370,7 @@ function authenticateAdminToken(req, res, next) {
     });
 }
 function generateAcessToken(req, res, next) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15s'})
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'})
 }
 
 app.listen(port, () => {

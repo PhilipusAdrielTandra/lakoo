@@ -17,7 +17,7 @@ import React, { useState } from "react";
 import { Carousel } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom'; 
 
-export default function Signin() {
+export default function AdminSignin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [validationMessage, setValidationMessage] = useState('');
@@ -28,7 +28,7 @@ export default function Signin() {
     e.preventDefault();
   
     try {
-      const response = await fetch('http://localhost:8081/users/login', {
+      const response = await fetch('http://localhost:8081/admins/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ export default function Signin() {
   
         // Use the access token for subsequent requests
         const accessToken = data.accessToken;
-        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('token', accessToken);
   
         // Handle login success (e.g., store the token, redirect, etc.)
         navigate('/list-item');
@@ -158,9 +158,10 @@ export default function Signin() {
                     Register here
                   </a>
                 </p>
-                <p className="mt-5 text-center text-sm text-gray-500">
-                  Are you an Admin?{' '}
-                  <a href="/admin" className="font-semibold leading-6 text-red-900 hover:text-red-600">
+
+                <p className="mt-10 text-center text-sm text-gray-500">
+                 Are you a member?{' '}
+                  <a href="/" className="font-semibold leading-6 text-red-900 hover:text-red-600">
                     Sign in
                   </a>
                 </p>
