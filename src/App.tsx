@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Form from './components/Form.tsx';
 import Signin from "./components/Signin";
 import Register from "./components/Register";
+import Success from "./components/Success";
 import Header from "./components/Header";
 import AdminSignin from "./components/AdminSignin"
 import AdminView from './components/AdminView'
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           {/* <Route path="/" element={<Landing/>}/> */}
           <Route path="/form" element={<><Header /><Form /></>}/>
+          <Route path="/success" element={<><Success/></>}/>
           <Route path="/" element={<Signin/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route path="/admin" element={<AdminSignin/>}/>

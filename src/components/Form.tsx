@@ -87,6 +87,7 @@ const condition_opt = [
 ]
 
 const ProductForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -139,6 +140,11 @@ const ProductForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!termsAccepted) {
+      alert('Please accept the terms and conditions.');
+      return;
+    }
+
     const token = localStorage.getItem('accessToken'); // Replace with your authentication token
 
     const form = new FormData();
@@ -161,6 +167,7 @@ const ProductForm = () => {
       });
 
       console.log('Product inserted successfully', response.data);
+      navigate('/success');
       // Add any additional handling or redirection logic here
     } catch (error) {
       console.error('Failed to insert product', error);
