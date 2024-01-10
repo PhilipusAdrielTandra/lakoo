@@ -68,7 +68,7 @@ function AdminView() {
           return;
         }
 
-        const response = await fetch('http://localhost:8081/products-2', { // Adjust the URL as per your API
+        const response = await fetch('http://localhost:8081/products', { // Adjust the URL as per your API
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -101,9 +101,17 @@ function AdminView() {
       )}
 
       {/* Header Section */}
-      <div className="flex justify-between items-center p-4 bg-gray-100">
-        <h1 className="text-xl font-semibold">Admin Dashboard</h1>
-        <button onClick={handleSignOut} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+      <div className="flex justify-between items-center p-4 bg-black">
+        {/* LOGO */}
+        <div className="flex flex-shrink-0 items-center">
+                  <img
+                    className="h-5 w-auto"
+                    src="src/assets/images/logotextred.png"
+                    alt="Lakoo"
+                  />
+        </div>
+        <h1 className="text-xl font-semibold text-white">Admin Dashboard</h1>
+        <button onClick={handleSignOut} className="text-sm bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-3 rounded">
           Sign Out
         </button>
       </div>

@@ -18,12 +18,7 @@ export default function Example() {
   const handleSignOut = () => {
     // Clear the token from storage
     localStorage.removeItem('accessToken'); // or sessionStorage.removeItem('token');
-
-    // Update application state here if needed
-    // For example, update a global user context or redux state
-
-    // Redirect to the login page or home page
-    navigate('/home'); // Replace '/login' with the path to your login page
+    navigate('/'); // Replace '/login' with the path to your login page
 };
   return (
     <Disclosure as="nav" className="bg-black">

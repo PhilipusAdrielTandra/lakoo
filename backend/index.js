@@ -285,18 +285,37 @@ app.get('/products', authenticateAdminToken, async (req, res) => {
 
 app.get('/products-2', authenticateAdminToken, async (req, res) => {
     try {
-        const products = await db.collection("products").find({}).toArray();
-
-        // Fetch usernames for each product
-        const productsWithUsernames = await Promise.all(
-            products.map(async product => {
-                const user = await db.collection("users").findOne({ _id: new ObjectId(product.userId) });
-                return {
-                    ...product,
-                    username: user ? user.username : 'Unknown User'
-                };
-            })
-        );
+        const productsWithUsernames = await db.collection("products")
+            .aggregate([
+                {
+                    $lookup: {
+                        from: "users", // collection to join
+                        localField: "userId", // field from the products collection
+                        foreignField: "_id", // field from the users collection
+                        as: "userDetails" // output array
+                    }
+                },
+                {
+                    $unwind: {
+                        path: "$userDetails",
+                        preserveNullAndEmptyArrays: true // To keep products even if no user is found
+                    }
+                },
+                {
+                    $project: {
+                        name: 1,
+                        description: 1,
+                        category: 1,
+                        brand: 1,
+                        condition: 1,
+                        style: 1,
+                        price: 1,
+                        img: 1,
+                        userId: 1,
+                        username: "$userDetails.username" // include username
+                    }
+                }
+            ]).toArray();
 
         res.json(productsWithUsernames);
     } catch (err) {
@@ -304,7 +323,6 @@ app.get('/products-2', authenticateAdminToken, async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
 
 
 app.put('/products/:productId/status', authenticateAdminToken, async (req, res) => {

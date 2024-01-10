@@ -37,7 +37,7 @@ const Modal = ({ product, onClose }) => {
     return (
         <div className="modal-backdrop">
             <div className="modal-content">
-                <h3>{product.name}</h3>
+                <h3  className="text-center mb-3 text-xl font-bold">{product.name}</h3>
 
                 <table className='table-detail'>
                     <tbody>
@@ -47,10 +47,6 @@ const Modal = ({ product, onClose }) => {
                         </tr>
                         <tr>
                             <th>Description</th>
-                            <td>{product.description}</td>
-                        </tr>
-                        <tr>
-                            <th>Condition</th>
                             <td>{product.description}</td>
                         </tr>
                         <tr>
@@ -71,13 +67,14 @@ const Modal = ({ product, onClose }) => {
                         </tr>
                         <tr>
                             <th>Status</th>
-                            <label>
+                            <label className="flex items-center space-x-2 ml-5 mt-3">
                                 <input 
                                     type="checkbox" 
                                     checked={status} 
-                                    onChange={handleStatusChange} 
+                                    onChange={handleStatusChange}
+                                    className="form-checkbox h-5 w-5 text-green-600" 
                                 />
-                                {status ? 'Accepted' : 'Rejected'}
+                                <span>{status ? 'Accepted' : 'Rejected'}</span>
                             </label>
                         </tr>
                         <tr>
@@ -90,7 +87,15 @@ const Modal = ({ product, onClose }) => {
                         </tr>
                     </tbody>
                 </table>
-                <button className='btn btn-secondary text-xs' onClick={onClose}>Close</button>
+                <div className="flex justify-center mt-4">
+                    <button 
+                        className='btn btn-secondary text-xs' 
+                        onClick={onClose}
+                    >
+                        Close
+                    </button>
+                </div>
+                {/* <button className='btn btn-secondary text-xs mt-4' onClick={onClose}>Close</button> */}
             </div>
         </div>
     );
@@ -112,7 +117,7 @@ export default function ProductItem({ product }) {
                     {product.createdAt} 
                 </td>
                 <td className="p-2">
-                    {product.username} 
+                    {product.userId} 
                 </td>
                 <td className="p-2">
                     {product.status}
