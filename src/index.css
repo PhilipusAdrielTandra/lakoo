@@ -1,3 +1,71 @@
+@font-face {
+    font-family: 'Hanken Grotesk';
+    src: url('src\assets\fonts\HankenGrotesk-VariableFont_wght.ttf') format('ttf');
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn {
+        @apply transition duration-300 ease-out;
+        @apply text-center px-2 py-1 uppercase font-semibold;
+        @apply border shadow-[0_1px_4px_0_rgba(0,0,0,0.4)];
+    }
+
+    .btn-primary {
+        @apply border-blue-600 bg-blue-600/80 text-blue-50;
+        @apply hover:bg-blue-600;
+    }
+
+    .btn-secondary {
+        @apply border-gray-600 bg-gray-600/80 text-gray-50;
+        @apply hover:bg-gray-600;
+    }
+
+    .btn-danger {
+        @apply border-red-600 bg-red-600/80 text-red-50;
+        @apply hover:bg-red-600;
+    }
+
+    .table-detail {
+        @apply border-collapse border w-full;
+    }
+
+    .table-detail th,
+    .table-detail td {
+        @apply py-3 px-5 align-middle border;
+    }
+
+    .table-detail th {
+        @apply text-right;
+    }
+
+    .checkbox-label {
+        @apply flex items-center gap-2; /* Adjust the gap between checkbox and label text */
+    }
+
+    
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(22, 22, 22, 0.6); /* This is equivalent to bg-gray-600 with 60% opacity */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 700px;
+        width: 100%;
+    }
+    
+    
+}
