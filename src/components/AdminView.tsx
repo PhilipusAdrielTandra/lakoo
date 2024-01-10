@@ -64,11 +64,11 @@ function AdminView() {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          history('/login');
+          history('/');
           return;
         }
 
-        const response = await fetch('http://localhost:8081/products', { // Adjust the URL as per your API
+        const response = await fetch('http://localhost:8081/products-2', { // Adjust the URL as per your API
           headers: {
             Authorization: `Bearer ${token}`,
           },

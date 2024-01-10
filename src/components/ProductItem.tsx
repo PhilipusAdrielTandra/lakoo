@@ -136,7 +136,7 @@ export default function ProductItem({ product }) {
                     {product.createdAt} 
                 </td>
                 <td className="p-2">
-                    {product.userId} 
+                    {product.username} 
                 </td>
                 <td className="p-2">
                     {product.status}

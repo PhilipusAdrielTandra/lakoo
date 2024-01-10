@@ -284,6 +284,10 @@ app.get('/products', authenticateAdminToken, async (req, res) => {
 });
 
 app.get('/products-2', authenticateAdminToken, async (req, res) => {
+    console.log(res)
+    console.log(req)
+    const createdAt = new Date(); 
+
     try {
         const productsWithUsernames = await db.collection("products")
             .aggregate([
@@ -312,7 +316,9 @@ app.get('/products-2', authenticateAdminToken, async (req, res) => {
                         price: 1,
                         img: 1,
                         userId: 1,
-                        username: "$userDetails.username" // include username
+                        username: "$userDetails.username", // include username
+                        createdAt: 1,
+                        status: 1
                     }
                 }
             ]).toArray();
