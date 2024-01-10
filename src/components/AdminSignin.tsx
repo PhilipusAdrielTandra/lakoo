@@ -67,15 +67,20 @@ export default function AdminSignin() {
         <div className="flex items-center justify-center h-screen">
           <div className="mx-auto max-w-full lg:max-w-screen-xl rounded-lg overflow-hidden bg-black shadow-lg md:shadow-xl">
             {/* LOGIN SIDE */}
-            <div className="flex min-h-full flex-1 flex-col float-left w-1/2 px-6 py-12 lg:px-8">
+            <div className="min-h-full px-6 py-12 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
                   className="mx-auto h-20 w-auto"
                   src="src/assets/images/logo_circle.png"
                   alt="Lakoo Logo"
                 />
+<<<<<<< Updated upstream
                 <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-100">
                   Admin Sign In
+=======
+                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                  Hi admin! Sign in to your account
+>>>>>>> Stashed changes
                 </h2>
               </div>
       
@@ -162,7 +167,7 @@ export default function AdminSignin() {
             </div>
 
             {/* CAROUSEL SIDE */}
-            <div className="flex h-full flex-1 flex-col float-right w-1/2">
+            {/* <div className="flex h-full flex-1 flex-col float-right w-1/2">
               <Carousel className="flex-1">
                 <img
                   src="src/assets/images/carousel1.png"
@@ -180,7 +185,7 @@ export default function AdminSignin() {
                   className="h-full w-full object-cover"
                 />
               </Carousel>
-            </div>
+            </div> */}
           </div>
         </div>
         </div>
