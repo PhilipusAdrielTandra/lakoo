@@ -91,11 +91,11 @@ export default function AdminSignin() {
                       <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-100">
                         Password
                       </label>
-                      <div className="text-sm">
+                      {/* <div className="text-sm">
                         <a href="#" className="font-semibold text-red-700 hover:text-red-900 hover:underline">
                           Forgot password?
                         </a>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="mt-2">
                       <input

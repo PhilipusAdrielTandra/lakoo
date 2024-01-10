@@ -249,11 +249,12 @@ export default function Register() {
                                     Phone Number
                                 </label>
 
-                                <div className="mt-2">
+                                <div className="mt-2 flex">
                                     <NumericFormat 
                                         value={formData.number}
                                         prefix="+62" 
                                         type="tel"
+                                        maxLength={14}
                                         onValueChange={() => handleChange}
                                         required
                                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -302,7 +303,7 @@ export default function Register() {
                                     State/Province
                                 </label>
                                 </div>
-                                <div className="mt-2">
+                                <div className="mt-1.5">
                                 <Select
                                     id="state"
                                     name="state"
@@ -333,7 +334,7 @@ export default function Register() {
                                     City
                                 </label>
                                 </div>
-                                <div className="mt-2">
+                                <div className="mt-1.5">
                                 <Select
                                     id="city"
                                     name="city"
