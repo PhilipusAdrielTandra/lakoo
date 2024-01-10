@@ -234,7 +234,7 @@ app.post('/products', authenticateToken, upload.single('image'), async (req, res
     console.log('Request Body:', req.body);
     // console.log('Request File:', req.file);
 
-    const { name, description, category, brand, condition, style, price, status, img } = req.body;
+    const { name, description, category, brand, condition, style, price, status, image } = req.body;
     // const img = req.file.filename;
     const userId = new ObjectId(req.user.userId); 
     const createdAt = new Date(); 
@@ -254,7 +254,7 @@ app.post('/products', authenticateToken, upload.single('image'), async (req, res
             style,
             price,
             status,
-            img, 
+            image, 
             userId, 
             createdAt, 
         });
