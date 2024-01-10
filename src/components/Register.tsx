@@ -276,8 +276,11 @@ export default function Register() {
                                     <input
                                         id="zip"
                                         name="zip"
-                                        type="zip"
+                                        type="text"
+                                        pattern="[0-9]*"
+                                        maxLength={5}
                                         autoComplete="zip"
+                                        placeholder="Must contain only 5 numbers, e.g. 12403"
                                         required
                                         value={formData.zip}
                                         onChange={handleChange}
@@ -289,10 +292,11 @@ export default function Register() {
                         </div>
                         </div>
                         
-                        <div>
+                        <div className="flex justify-center">
                             <button
                             type="submit"
-                            className="flex w-full justify-center rounded-md bg-red-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="flex justify-center rounded-md bg-red-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            style={{ width: '95%'}}
                             >
                             Create Account
                             </button>
@@ -301,7 +305,7 @@ export default function Register() {
         
                     <p className="mt-5 text-center text-sm text-gray-500">
                     Already a member?{' '}
-                    <a href="/" className="font-semibold leading-6 text-red-900 hover:text-red-600">
+                    <a href="/" className="font-semibold leading-6 text-red-700 hover:text-red-900 hover:underline">
                         Sign in here
                     </a>
                     </p>
