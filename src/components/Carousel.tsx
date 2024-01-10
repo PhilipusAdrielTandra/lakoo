@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Swipe from "react-easy-swipe";
 import { CarouselData } from "../assets/CarouselData";
@@ -98,7 +98,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
           {/* adding the dots to navigate the carousel */}
           <div className="ml-8 absolute flex justify-center bottom-0">
-            {CarouselData.map((element, index) => {
+            {CarouselData.map((_, index) => {
               return (
                 <div
                   className={

@@ -1,16 +1,28 @@
+import React from 'react';
 import ProductItem from './ProductItem';
 
-export default function ProductList({ products }) {
+interface Product {
+    _id: string;
+    name: string;
+    createdAt: string;
+    username: string;
+    status: string;
+    description: string;
+    brand: string;
+    condition: string;
+    style: string;
+    price: string;
+    img: string;
+}
 
+interface ProductListProps {
+    products: Product[];
+}
+
+const ProductList: React.FC<ProductListProps> = ({ products }) => {
     if (products && products.length > 0) {
         return (
             <div className='w-full flex flex-col items-center justify-center '>
-                {/* {
-                    products.map((product) => {
-                        return <ProductItem key={product._id} product={product} />
-                    })
-                } */}
-
                 <table className="w-full text-left">
                     <thead>
                         <tr>
@@ -28,12 +40,14 @@ export default function ProductList({ products }) {
                     </tbody>
                 </table>
             </div>
-        )
+        );
     } else {
         return (
             <div className="w-full text-center border border-slate-400 p-3">
                 Data is empty
             </div>
-        )
+        );
     }
-}
+};
+
+export default ProductList;

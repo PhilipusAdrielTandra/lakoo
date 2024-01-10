@@ -1,6 +1,5 @@
-import { PhotoIcon } from '@heroicons/react/24/solid';
 import Select from 'react-select';
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
@@ -99,25 +98,16 @@ const ProductForm = () => {
     status: 'Pending',
     image: '',
   });
-  const [column, setColumn] = useState(""); 
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTermsAccepted(e.target.checked);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
-
-
-  const handleImageChange = (e) => {
-    setFormData({
-      ...formData,
-      image: e.target.files[0],
     });
   };
 
@@ -158,7 +148,7 @@ const ProductForm = () => {
     checkUserStatus();
   }, [navigate]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!termsAccepted) {

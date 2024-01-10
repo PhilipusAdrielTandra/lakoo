@@ -1,17 +1,4 @@
-import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-
-const navigation = [
-  { name: 'List an item', href: '#', current: true },
-  { name: 'Track progress', href: '#', current: false }
-]
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function Example() {
   const navigate = useNavigate();
 

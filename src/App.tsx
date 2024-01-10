@@ -1,4 +1,3 @@
-import Landing from './components/Landing';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Form from './components/Form.tsx';
 import Signin from "./components/Signin";
