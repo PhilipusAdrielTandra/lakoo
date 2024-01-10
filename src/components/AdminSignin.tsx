@@ -58,7 +58,7 @@ export default function AdminSignin() {
     }
   };
 
-  
+
 
     return (
       <>
@@ -74,13 +74,8 @@ export default function AdminSignin() {
                   src="src/assets/images/logo_circle.png"
                   alt="Lakoo Logo"
                 />
-<<<<<<< Updated upstream
-                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-100">
-                  Admin Sign In
-=======
                 <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                   Hi admin! Sign in to your account
->>>>>>> Stashed changes
                 </h2>
               </div>
       

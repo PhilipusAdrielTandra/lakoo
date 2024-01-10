@@ -26,7 +26,6 @@ export default function Signin() {
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-  
     try {
       const response = await fetch('http://localhost:8081/users/login', {
         method: 'POST',
