@@ -12,6 +12,7 @@
   }
   ```
 */
+import React, { useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
@@ -45,9 +46,10 @@ const condition_opt = [
   { value: 'used', label: 'Used - lightly used but no noticeable flaws' },
   // Add more options as needed
 ]
-const CreateProduct = () => {
+
+export default function Example() {
   return (
-    <form className="form m-11">
+    <form className="form m-11" onSubmit={handleSubmit}>
       <div className="px-24">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">List an item</h2>
@@ -71,7 +73,7 @@ const CreateProduct = () => {
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-red-800 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-red-500"
                     >
                       <span>Upload a file</span>
-                      <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                      <input id="photos" name="photos" type="file" onChange={handleFileChange} className="sr-only" />
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
@@ -79,6 +81,26 @@ const CreateProduct = () => {
                 </div>
               </div>
             </div>
+
+            <div className="sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                Item name
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="item-name"
+                    id="item-name"
+                    autoComplete="item-name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+            </div>
+
             {/* DESCRIPTION */}
             <div className="col-span-full">
               <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
@@ -89,6 +111,8 @@ const CreateProduct = () => {
                   id="about"
                   name="about"
                   rows={3}
+                  value={formData.description}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                   defaultValue={''}
                 />
@@ -111,6 +135,7 @@ const CreateProduct = () => {
                   id="style"
                   name="style"
                   options={category_opt}
+                  onChange={(selectedOption) => handleSelectChange('category', selectedOption)}
                   className="basic-multi-select"
                   classNamePrefix="select"
                   maxMenuHeight={150}
@@ -128,6 +153,7 @@ const CreateProduct = () => {
                   id="style"
                   name="style"
                   options={brand_opt}
+                  onChange={(selectedOption) => handleSelectChange('brand', selectedOption)}
                   className="basic-multi-select"
                   classNamePrefix="select"
                   maxMenuHeight={150}
@@ -141,10 +167,22 @@ const CreateProduct = () => {
                 Condition
               </label>
               <div className="mt-2">
+                {/* <select
+                  id="condition"
+                  name="condition"
+                  autoComplete="condition-name"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                >
+                  <option>Brand new - unused with original packaging or tags</option>
+                  <option>Like new - mint condition pre-owned or new without tags</option>
+                  <option>Used - lightly used but no noticeable flaws</option>
+                </select> */}
+
                 <Select
                   id="style"
                   name="style"
                   options={condition_opt}
+                  onChange={(selectedOption) => handleSelectChange('condition', selectedOption)}
                   className="basic-multi-select"
                   classNamePrefix="select"
                   maxMenuHeight={150}
@@ -162,6 +200,7 @@ const CreateProduct = () => {
                 id="style"
                 name="style"
                 options={style_opt}
+                onChange={(selectedOption) => handleSelectChange('condition', selectedOption)}
                 isMulti
                 className="basic-multi-select"
                 classNamePrefix="select"
@@ -181,11 +220,13 @@ const CreateProduct = () => {
                   <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">IDR</span>
                   <input
                     type="text"
-                    name="item-price"
-                    id="item-price"
-                    autoComplete="item-price"
+                    name="price"
+                    id="price"
+                    autoComplete="price"
                     pattern="[0-9]*"
                     inputMode="numeric"
+                    value={formData.price}
+                    onChange={handleChange}
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="0,00"
                   />
@@ -203,6 +244,8 @@ const CreateProduct = () => {
                 <input
                   type="text"
                   name="street-address"
+                  value={formData.address}
+                  onChange={handleChange}
                   id="street-address"
                   autoComplete="street-address"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -217,6 +260,8 @@ const CreateProduct = () => {
               <div className="mt-2">
                 <input
                   type="text"
+                  value={formData.city}
+                  onChange={handleChange}
                   name="city"
                   id="city"
                   autoComplete="address-level2"
@@ -234,6 +279,8 @@ const CreateProduct = () => {
                   type="text"
                   name="region"
                   id="region"
+                  value={formData.state}
+                  onChange={handleChange}
                   autoComplete="address-level1"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -248,6 +295,8 @@ const CreateProduct = () => {
                 <input
                   type="text"
                   name="postal-code"
+                  value={formData.zip}
+                  onChange={handleChange}
                   id="postal-code"
                   autoComplete="postal-code"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -256,6 +305,14 @@ const CreateProduct = () => {
             </div>
           </div>
         </div>
+
+        <div className="border-b border-gray-900/10 pb-12 py-10">
+          <h2 className="text-base font-semibold leading-7 text-gray-900">Notifications</h2>
+          <p className="mt-1 text-sm leading-6 text-gray-600">
+            We'll always let you know about important changes.
+          </p>
+        </div>
+  
       </div>
       <div className="mt-6 flex items-center justify-end gap-x-6 px-24">
         <button type="button" className="text-sm font-semibold leading-6 text-gray-900">

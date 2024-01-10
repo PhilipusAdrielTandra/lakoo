@@ -30,12 +30,12 @@
     }
 
     .table-detail {
-        @apply border-collapse border border-slate-300;
+        @apply border-collapse border;
     }
 
     .table-detail th,
     .table-detail td {
-        @apply py-3 px-5 align-middle border border-slate-300;
+        @apply py-3 px-5 align-middle border;
     }
 
     .table-detail th {
