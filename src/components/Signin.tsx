@@ -46,7 +46,7 @@ export default function Signin() {
         localStorage.setItem('accessToken', accessToken);
   
         // Handle login success (e.g., store the token, redirect, etc.)
-        navigate('/list-item');
+        navigate('/form');
       } else {
         console.error('Login failed:', data.error);
         // Handle login failure
