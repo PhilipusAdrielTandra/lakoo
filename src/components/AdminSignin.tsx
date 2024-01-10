@@ -1,20 +1,5 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import React, { useState } from "react";
-// import { TEInput, TERipple } from "tw-elements-react";
-import { Carousel } from "@material-tailwind/react";
+import Carousel from "../components/Carousel";
 import { useNavigate } from 'react-router-dom'; 
 
 export default function AdminSignin() {
@@ -64,7 +49,7 @@ export default function AdminSignin() {
       <>
         <div className="bg-cover bg-no-repeat bg-center h-screen" style={{backgroundImage: 'url("src/assets/images/background.jpeg")'}}>
         {/* BIG CONTAINER */}
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex flex-col lg:flex-row items-center justify-center h-screen">
           <div className="mx-auto max-w-full lg:max-w-screen-xl rounded-lg overflow-hidden bg-black shadow-lg md:shadow-xl">
             {/* LOGIN SIDE */}
             <div className="min-h-full px-6 py-12 lg:px-8">
@@ -74,7 +59,7 @@ export default function AdminSignin() {
                   src="src/assets/images/logo_circle.png"
                   alt="Lakoo Logo"
                 />
-                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-100">
                   Hi admin! Sign in to your account
                 </h2>
               </div>
@@ -154,33 +139,12 @@ export default function AdminSignin() {
 
                 <p className="mt-5 text-center text-sm text-gray-100">
                  Are you a member?{' '}
-                  <a href="/home" className="font-semibold leading-6 text-red-700 hover:text-red-900 hover:underline">
+                  <a href="/" className="font-semibold leading-6 text-red-700 hover:text-red-900 hover:underline">
                     Sign in
                   </a>
                 </p>
               </div>
             </div>
-
-            {/* CAROUSEL SIDE */}
-            {/* <div className="flex h-full flex-1 flex-col float-right w-1/2">
-              <Carousel className="flex-1">
-                <img
-                  src="src/assets/images/carousel1.png"
-                  alt="image 1"
-                  className="h-full w-full object-cover"
-                />
-                <img
-                  src="src/assets/images/carousel2.png"
-                  alt="image 2"
-                  className="h-full w-full object-cover"
-                />
-                <img
-                  src="src/assets/images/carousel3.png"
-                  alt="image 3"
-                  className="h-full w-full object-cover"
-                />
-              </Carousel>
-            </div> */}
           </div>
         </div>
         </div>
