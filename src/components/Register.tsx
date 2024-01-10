@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom'; 
+import Select from 'react-select';
 
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -13,16 +14,77 @@ export default function Register() {
         state: '',
         zip: ''
     })
+
+    const provinceCity: {[key: string]: string[]} = {
+        'Aceh': ['Banda Aceh', 'Langsa', 'Lhokseumawe','Sabang','Subulussalam'],
+        'Bali': ['Denpasar'],
+        'Bangka Belitung': ['Pangkalpinang'],
+        'Banten': ['Cilegon','Serang','Tangerang Selatan','Tangerang'],
+        'Bengkulu': ['Bengkulu'],
+        'Daerah Istimewa Yogyakarta': ['Yogyakarta'],
+        'Gorontalo': ['Gorontalo'],
+        'Jakarta': ['Kota Administrasi Jakarta Barat','Kota Administrasi Jakarta Pusat','Kota Administrasi Jakarta Selatan','Kota Administrasi Jakarta Timur','Kota Administrasi Jakarta Utara'],
+        'Jambi': ['Sungai Penuh','Jambi'],
+        'Jawa Barat': ['Bandung','Bekasi','Bogor','Cimahi','Cirebon','Depok','Sukabumi','Tasikmalaya','Banjar'],
+        'Jawa Tengah': ['Magelang', 'Pekalongan', 'Salatiga', 'Semarang', 'Surakarta', 'Tegal'],
+        'Jawa Timur': ['Batu', 'Blitar', 'Kediri', 'Madiun', 'Malang', 'Mojokerto', 'Pasuruan', 'Probolinggo', 'Surabaya'],
+        'Kalimantan Barat': ['Pontianak', 'Singkawang'],
+        'Kalimantan Selatan': ['Banjarbaru', 'Banjarmasin'],
+        'Kalimantan Tengah': ['Palangka Raya'],
+        'Kalimantan Timur': ['Balikpapan', 'Bontang', 'Samarinda', 'Nusantara'],
+        'Kalimantan Utara': ['Tarakan'],
+        'Kepulauan Riau': ['Batam', 'Tanjungpinang'],
+        'Lampung': ['Bandar Lampung', 'Metro'],
+        'Maluku Utara': ['Ternate', 'Tidore Kepulauan'],
+        'Maluku': ['Ambon', 'Tual'],
+        'Nusa Tenggara Barat': ['Bima', 'Mataram'],
+        'Nusa Tenggara Timur': ['Kupang'],
+        'Papua Barat Daya': ['Sorong'],
+        'Papua': ['Jayapura'],
+        'Riau': ['Dumai', 'Pekanbaru'],
+        'Sulawesi Selatan': ['Makassar', 'Palopo', 'Parepare'],
+        'Sulawesi Tengah': ['Palu'],
+        'Sulawesi Tenggara': ['Baubau', 'Kendari'],
+        'Sulawesi Utara': ['Bitung', 'Kotamobagu', 'Manado', 'Tomohon'],
+        'Sumatera Barat': ['Bukittinggi', 'Padang', 'Padang Panjang', 'Pariaman', 'Payakumbuh', 'Sawahlunto', 'Solok'],
+        'Sumatera Selatan': ['Lubuklinggau', 'Pagar Alam', 'Palembang', 'Prabumulih'],
+        'Sumatera Utara': ['Binjai', 'Gunungsitoli', 'Medan', 'Padangsidimpuan', 'Pematangsiantar', 'Sibolga', 'Tanjungbalai', 'Tebing Tinggi']
+    }
+
+    const provinceOptions = Object.keys(provinceCity).map((provinceKey) => ({
+        label: provinceKey,
+        value: provinceKey,
+    }));
+
+    const cityOptions = formData.state && provinceCity[formData.state]
+    ? provinceCity[formData.state].map((city) => ({
+        label: city,
+        value: city,
+    }))
+    : [];
+
     
-  const [confirmPass, setConfirmPass] = useState('');
-  const navigate = useNavigate();
+    const [confirmPass, setConfirmPass] = useState('');
+    const navigate = useNavigate();
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-};
+    const handleChange = (e: { target: { name: any; value: any; }; }) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
+    const handleProvinceChange = (selectedOption: { label: string; value: string } | null) => {
+        setFormData({
+            ...formData,
+            state: selectedOption?.value || '',
+            city: '', // Reset city field when a new province is selected
+        });
+    };
+    
+    const handleCityChange = (selectedOption: { label: string; value: string } | null) => {
+        setFormData({ ...formData, city: selectedOption?.value || '' });
+    };
+
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
 
     if (formData.password !== confirmPass) {
         alert("Passwords do not match.");
@@ -59,7 +121,7 @@ export default function Register() {
         {/* BIG CONTAINER */}
         <div className="bg-cover bg-no-repeat bg-center h-screen" style={{backgroundImage: 'url("src/assets/images/background.jpeg")'}}>
         <div className="flex items-center justify-center h-screen ">
-            <div className="mx-auto lg:max-w-screen-xl overflow-y-auto rounded-lg bg-white shadow-lg md:shadow-xl" style={{ height: '90%', width: '55%'}}>
+            <div className="mx-auto lg:max-w-screen-xl rounded-lg bg-white shadow-lg md:shadow-xl" style={{ height: '90%', width: '55%'}}>
                 {/* TITLE */}
                 <div className="flex min-h-full flex-1 flex-col px-6 py-6 lg:px-8">
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -228,33 +290,22 @@ export default function Register() {
 
                             <div>
                                 <div className="flex items-center justify-between mt-4">
-                                <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
-                                    City
-                                </label>
-                                </div>
-                                <div className="mt-2">
-                                    <input
-                                        id="city"
-                                        name="city"
-                                        type="city"
-                                        autoComplete="city"
-                                        required
-                                        value={formData.city}
-                                        onChange={handleChange}
-                                        // onChange={(e) => setCity(e.target.value)}
-                                        className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <div className="flex items-center justify-between mt-4">
                                 <label htmlFor="state" className="block text-sm font-medium leading-6 text-gray-900">
                                     State/Province
                                 </label>
                                 </div>
                                 <div className="mt-2">
-                                <input
+                                <Select
+                                    id="state"
+                                    name="state"
+                                    options={provinceOptions}
+                                    value={provinceOptions.find((option) => option.value === formData.state)}
+                                    onChange={handleProvinceChange}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
+                                />
+
+                                {/* <input
                                     id="state"
                                     name="state"
                                     type="state"
@@ -264,7 +315,37 @@ export default function Register() {
                                     onChange={handleChange}
                                     // onChange={(e) => setState(e.target.value)}
                                     className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                /> */}
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="flex items-center justify-between mt-4">
+                                <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
+                                    City
+                                </label>
+                                </div>
+                                <div className="mt-2">
+                                <Select
+                                    id="city"
+                                    name="city"
+                                    options={cityOptions}
+                                    value={cityOptions.find((option) => option.value === formData.city) || null}
+                                    onChange={handleCityChange}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
                                 />
+                                    {/* <input
+                                        id="city"
+                                        name="city"
+                                        type="city"
+                                        autoComplete="city"
+                                        required
+                                        value={formData.city}
+                                        onChange={handleChange}
+                                        // onChange={(e) => setCity(e.target.value)}
+                                        className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    /> */}
                                 </div>
                             </div>
 

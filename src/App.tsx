@@ -15,7 +15,7 @@ function App() {
         <Routes>
           {/* <Route path="/" element={<Landing/>}/> */}
           <Route path="/form" element={<><Header /><Form /></>}/>
-          <Route path="/home" element={<Signin/>}/>
+          <Route path="/" element={<Signin/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route path="/admin" element={<AdminSignin/>}/>
           <Route path="/adminview" element={<AdminView/>}/>
