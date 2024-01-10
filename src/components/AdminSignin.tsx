@@ -56,7 +56,9 @@ export default function AdminSignin() {
       console.error('Error:', error);
       // Handle network error
     }
-  };;
+  };
+
+  
 
     return (
       <>
@@ -152,7 +154,7 @@ export default function AdminSignin() {
 
                 <p className="mt-5 text-center text-sm text-gray-100">
                  Are you a member?{' '}
-                  <a href="/" className="font-semibold leading-6 text-red-700 hover:text-red-900 hover:underline">
+                  <a href="/home" className="font-semibold leading-6 text-red-700 hover:text-red-900 hover:underline">
                     Sign in
                   </a>
                 </p>
