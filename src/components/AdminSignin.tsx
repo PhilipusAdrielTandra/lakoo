@@ -59,7 +59,7 @@ export default function AdminSignin() {
                   src="src/assets/images/logo_circle.png"
                   alt="Lakoo Logo"
                 />
-                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-100">
+                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                   Hi admin! Sign in to your account
                 </h2>
               </div>

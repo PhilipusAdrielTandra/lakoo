@@ -283,6 +283,49 @@ app.get('/products', authenticateAdminToken, async (req, res) => {
     }
 });
 
+app.get('/products-2', authenticateAdminToken, async (req, res) => {
+    try {
+        const products = await db.collection("products").find({}).toArray();
+
+        // Fetch usernames for each product
+        const productsWithUsernames = await Promise.all(
+            products.map(async product => {
+                const user = await db.collection("users").findOne({ _id: new ObjectId(product.userId) });
+                return {
+                    ...product,
+                    username: user ? user.username : 'Unknown User'
+                };
+            })
+        );
+
+        res.json(productsWithUsernames);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+
+app.put('/products/:productId/status', authenticateAdminToken, async (req, res) => {
+    const { productId } = req.params;
+    const { status } = req.body;
+
+    try {
+        // Update the product status in the database
+        await db.collection("products").updateOne(
+            { _id: productId },
+            { $set: { status: status } }
+        );
+
+        res.json({ message: 'Status updated successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 
 app.get('/products/:productId', authenticateAdminToken, async (req, res) => {
     const productIdToFind = req.params.productId;

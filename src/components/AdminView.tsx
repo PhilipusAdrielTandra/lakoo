@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ProductList from './ProductList';
 
 function AdminView() {
   const [users, setUsers] = useState([]);
@@ -17,7 +18,7 @@ function AdminView() {
   };
 
   useEffect(() => {
-    // Function to check if the user is an admin
+    // ----------- Function to check if the user is an admin
     const checkAdminStatus = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -57,8 +58,38 @@ function AdminView() {
       }
     };
 
+    // ----------- Function to fetch data from backend
+  
+    const fetchProducts = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          history('/login');
+          return;
+        }
+
+        const response = await fetch('http://localhost:8081/products-2', { // Adjust the URL as per your API
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const productsData = await response.json();
+          setProducts(productsData);
+        } else {
+          // Handle errors
+          console.error('Error fetching products:', response.statusText);
+        }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+
+ 
     checkAdminStatus();
-  }, [history]);
+    fetchProducts();
+    }, [history]);
 
   return (
     <div>
@@ -69,9 +100,22 @@ function AdminView() {
         </div>
       )}
 
-      <h2>Products</h2>
-      {/* ... (products table) */}
-      <button onClick={handleSignOut}>Sign Out</button>
+      {/* Header Section */}
+      <div className="flex justify-between items-center p-4 bg-gray-100">
+        <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+        <button onClick={handleSignOut} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+          Sign Out
+        </button>
+      </div>
+
+      <div className="mt-4 p-4 max-w-4xl mx-auto shadow-lg bg-white">
+        {/* Products Table Container */}
+        <div className='overflow-auto'>
+          <h2 className="text-lg font-semibold mb-2">Products</h2>
+          <ProductList products={products} />
+        </div>
+      </div>
+
     </div>
   );
 }

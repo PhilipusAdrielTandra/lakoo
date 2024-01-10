@@ -41,5 +41,27 @@
     .table-detail th {
         @apply text-right;
     }
+
+    
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(75, 85, 99, 0.6); /* This is equivalent to bg-gray-600 with 60% opacity */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 500px;
+        width: 100%;
+    }
+    
     
 }
