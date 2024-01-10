@@ -119,10 +119,20 @@ const ProductForm = () => {
     });
   };
 
-  const handleSelectChange = (name, selectedOption) => {
+  const handleSelectChange = (name: string, selectedOption: any) => {
+    let value;
+  
+    if (Array.isArray(selectedOption)) {
+      // For multi-select fields, extract values from an array of objects
+      value = selectedOption.map((option) => option.value);
+    } else {
+      // For single-select fields, extract the value directly
+      value = selectedOption ? selectedOption.value : null;
+    }
+  
     setFormData({
       ...formData,
-      [name]: selectedOption,
+      [name]: value,
     });
   };
 
