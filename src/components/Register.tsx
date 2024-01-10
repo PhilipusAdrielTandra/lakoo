@@ -192,6 +192,8 @@ export default function Register() {
                                         id="number"
                                         name="number"
                                         type="number"
+                                        pattern="^(?:\\+62\\d{8,12})|(?:0\\d{8,12})$"
+                                        maxLength={13}
                                         autoComplete="number"
                                         required
                                         value={formData.number}

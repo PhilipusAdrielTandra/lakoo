@@ -14,6 +14,9 @@ module.exports = withMT({
       },
       colors: {
         "lakoo-red": "#d60103",
+      },
+      scale: {
+        "25" : ".25",
       }
     },
   },
