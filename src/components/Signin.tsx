@@ -14,7 +14,7 @@
 */
 import React, { useState } from "react";
 // import { TEInput, TERipple } from "tw-elements-react";
-import { Carousel } from "@material-tailwind/react";
+import Carousel  from "../components/Carousel"
 import { useNavigate } from 'react-router-dom'; 
 
 export default function Signin() {
@@ -70,10 +70,10 @@ export default function Signin() {
         {/*<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">*/}
         <div className="bg-cover bg-no-repeat bg-center h-screen" style={{backgroundImage: 'url("src/assets/images/background.jpeg")'}}>
         {/* BIG CONTAINER */}
-        <div className="flex items-center justify-center h-screen">
-          <div className="mx-auto max-w-full lg:max-w-screen-xl rounded-lg overflow-hidden bg-white shadow-lg md:shadow-xl">
+        <div className="flex flex-col lg:flex-row items-center justify-center h-screen">
+          <div className="mx-auto max-w-full lg:max-w-screen-xl rounded-lg overflow-hidden bg-white shadow-lg md:shadow-xl lg:flex lg:w-full" >
             {/* LOGIN SIDE */}
-            <div className="flex min-h-full flex-1 flex-col float-left w-1/2 px-6 py-12 lg:px-8">
+            <div className="flex flex-col w-full lg:w-1/2 px-16 py-12 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
                   className="mx-auto h-20 w-auto"
@@ -199,8 +199,9 @@ export default function Signin() {
             </div>
 
             {/* CAROUSEL SIDE */}
-            <div className="flex h-full flex-1 flex-col float-right w-1/2">
-              <Carousel className="flex-1">
+            <div className="hidden lg:flex flex-1 flex-col w-1/2">
+                  <Carousel/>
+              {/* <Carousel className="flex-1">
                 <img
                   src="src/assets/images/carousel1.png"
                   alt="image 1"
@@ -216,7 +217,7 @@ export default function Signin() {
                   alt="image 3"
                   className="h-full w-full object-cover"
                 />
-              </Carousel>
+              </Carousel> */}
             </div>
           </div>
         </div>
