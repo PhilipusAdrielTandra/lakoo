@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Carousel from "../components/Carousel";
 import { useNavigate } from 'react-router-dom'; 
 
 export default function AdminSignin() {
