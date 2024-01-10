@@ -42,6 +42,10 @@
         @apply text-right;
     }
 
+    .checkbox-label {
+        @apply flex items-center gap-2; /* Adjust the gap between checkbox and label text */
+    }
+
     
     .modal-backdrop {
         position: fixed;

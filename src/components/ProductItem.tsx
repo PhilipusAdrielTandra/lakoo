@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 const updateProductStatus = async (productId, newStatus) => {
     try {
-        const response = await fetch(`http://localhost:8081/products/${productId}/status`, {
+        const response = await fetch(`/products/edit/status/${productId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -23,14 +23,56 @@ const updateProductStatus = async (productId, newStatus) => {
 };
 
 const Modal = ({ product, onClose }) => {
-    const [status, setStatus] = useState(product.status);
+    const [statusRejected, setStatusRejected] = useState(product.status === 'Rejected');
+    const [statusPending, setStatusPending] = useState(product.status === 'Pending');
+    const [statusAccepted, setStatusAccepted] = useState(product.status === 'Accepted');
 
-    const handleStatusChange = async (e) => {
-        const newStatus = e.target.checked;
-        setStatus(newStatus);
+    const handleStatusChange = (status) => {
+        // Reset all statuses
+        setStatusRejected(false);
+        setStatusPending(false);
+        setStatusAccepted(false);
 
-        // Call a function to update the status in the backend
-        await updateProductStatus(product._id, newStatus);
+        // Set the selected status
+        if (status === 'Rejected') {
+            setStatusRejected(true);
+        } else if (status === 'Pending') {
+            setStatusPending(true);
+        } else if (status === 'Accepted') {
+            setStatusAccepted(true);
+        }
+    };
+
+    const handleSaveChanges = async () => {
+        // Call your API endpoint to update the status
+
+        let updatedStatus = '';
+        if (statusRejected) updatedStatus = 'Rejected';
+        if (statusPending) updatedStatus = 'Pending';
+        if (statusAccepted) updatedStatus = 'Accepted';
+
+        try {
+            const response = await fetch(`http://localhost:8081/products/edit/status/${product._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify({ status: updatedStatus })
+            });
+
+            if (response.ok) {
+                // Handle successful update
+                console.log('Status updated successfully');
+                window.location.reload();
+                
+            } else {
+                // Handle errors
+                console.error('Failed to update status');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -66,32 +108,20 @@ const Modal = ({ product, onClose }) => {
                         </tr>
                         <tr>
                             <th>Status</th>
-                            <label>
-                            <input 
-                                type="radio" 
-                                value="rejected" 
-                                checked={product.status === 'Rejected'} 
-                                onChange={handleStatusChange}
-                            />
-                            Rejected
+                            <label className="flex items-center space-x-2">
+                                <input 
+                                    type="checkbox" 
+                                    checked={statusRejected} 
+                                    onChange={() => handleStatusChange('Rejected')}
+                                />
+                                Rejected
                             </label>
 
-                            <label>
-                            <input 
-                                type="radio" 
-                                value="pending" 
-                                checked={product.status === 'Pending'} 
-                                onChange={handleStatusChange}
-                            />
-                            Pending
-                            </label>
-                            
-                            <label>
+                            <label className="flex items-center space-x-2">
                                 <input 
-                                    type="radio" 
-                                    value="accepted" 
-                                    checked={product.status === 'Accepted'} 
-                                    onChange={handleStatusChange}
+                                    type="checkbox" 
+                                    checked={statusAccepted} 
+                                    onChange={() => handleStatusChange('Accepted')}
                                 />
                                 Accepted
                             </label>
@@ -107,6 +137,12 @@ const Modal = ({ product, onClose }) => {
                     </tbody>
                 </table>
                 <div className="flex justify-center mt-4">
+                    <button 
+                        className='btn btn-primary text-xs mr-2' 
+                        onClick={handleSaveChanges}
+                    >
+                        Save Changes
+                    </button>
                     <button 
                         className='btn btn-secondary text-xs' 
                         onClick={onClose}
