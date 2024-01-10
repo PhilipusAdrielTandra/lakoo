@@ -14,8 +14,21 @@
 */
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import Select from 'react-select';
-import React, { useState, useEffect } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
+
+interface FormData {
+  name: string;
+  description: string;
+  category: string;
+  brand: string;
+  condition: string;
+  style: string;
+  price: string;
+  status: string;
+  image: File | null;
+}
 
 
 const style_opt = [
@@ -46,13 +59,64 @@ const condition_opt = [
   // Add more options as needed
 ]
 
-export default function Example() {
+const ProductForm: React.FC = () => {
   const [users, setUsers] = useState([]);
-  const [products, setProducts] = useState([]);
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    description: '',
+    category: '',
+    brand: '',
+    condition: '',
+    style: '',
+    price: '',
+    status: '',
+    image: null,
+  });
   const [isUser, setIsUser] = useState(false);
 
-  const history = useNavigate();
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFormData({ ...formData, image: e.target.files[0] });
+    }
+  };
+
+  const history = useNavigate();
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('description', formData.description);
+    data.append('category', formData.category);
+    data.append('brand', formData.brand);
+    data.append('condition', formData.condition);
+    data.append('style', formData.style);
+    data.append('price', formData.price);
+    data.append('status', formData.status);
+    if (formData.image) {
+      data.append('image', formData.image);
+    }
+
+    try {
+      const response = await axios.post('http://localhost:8081/products', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
+
+      console.log(response.data);
+      // Handle success or redirect to product list page
+    } catch (error) {
+      console.error('Error posting product:', error);
+      // Handle error
+    }
+  };
   useEffect(() => {
     const checkLogin = async () => {
       try {
@@ -93,7 +157,7 @@ export default function Example() {
 
   }, [history]);
   return (
-    <form className="form m-11">
+    <form className="form m-11" onSubmit={handleSubmit}>
       <div className="px-24">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">List an item</h2>
@@ -127,6 +191,21 @@ export default function Example() {
             </div>
 
             {/* DESCRIPTION */}
+            <div className="col-span-full">
+              <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+                Name
+              </label>
+              <div className="mt-2">
+                <textarea
+                  id="name"
+                  name="name"
+                  rows={1} 
+                  className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                  defaultValue={''}
+                />
+              </div>
+            </div>
+
             <div className="col-span-full">
               <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
                 Description
@@ -421,3 +500,5 @@ export default function Example() {
     </form>
   )
 }
+
+export default ProductForm;

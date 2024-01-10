@@ -93,7 +93,7 @@ app.post('/users/login', async (req, res) => {
             const passwordMatch = await bcrypt.compare(password, user.password);
 
             if (passwordMatch) {
-                const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
+                const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1hr' });
                 const refreshToken = jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
                 // Store the refresh token in a secure way (e.g., HttpOnly cookie)
@@ -168,7 +168,7 @@ app.post('/admins/login', async (req, res) => {
             const passwordMatch = await bcrypt.compare(password, user.password);
 
             if (passwordMatch) {
-                const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
+                const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1hr' });
                 const refreshToken = jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
                 // Store the refresh token in a secure way (e.g., HttpOnly cookie)
