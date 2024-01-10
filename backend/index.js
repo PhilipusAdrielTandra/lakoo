@@ -232,17 +232,17 @@ app.delete('/users/:userId', authenticateToken, async (req, res) => {
 
 app.post('/products', authenticateToken, upload.single('image'), async (req, res) => {
     console.log('Request Body:', req.body);
-    console.log('Request File:', req.file);
+    // console.log('Request File:', req.file);
 
-    const { name, description, category, brand, condition, style, price, status } = req.body;
-    const img = req.file.filename;
+    const { name, description, category, brand, condition, style, price, status, img } = req.body;
+    // const img = req.file.filename;
     const userId = new ObjectId(req.user.userId); 
     const createdAt = new Date(); 
 
 
-    if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded' });
-    }
+    // if (!req.file) {
+    //     return res.status(400).json({ error: 'No file uploaded' });
+    // }
 
     try {
         const result = await db.collection("products").insertOne({
@@ -325,7 +325,7 @@ app.get('/products-2', authenticateAdminToken, async (req, res) => {
 });
 
 
-app.put('/products/:productId/status', async (req, res) => {
+app.put('/products/:productId/status', authenticateAdminToken, async (req, res) => {
     const { productId } = req.params;
     const { status } = req.body;
 

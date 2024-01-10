@@ -97,7 +97,7 @@ const ProductForm = () => {
     style: '',
     price: '',
     status: 'Pending',
-    image: null,
+    image: '',
   });
   const [column, setColumn] = useState(""); 
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -146,8 +146,10 @@ const ProductForm = () => {
     }
 
     const token = localStorage.getItem('accessToken'); // Replace with your authentication token
+    
 
     const form = new FormData();
+    const URL = `https://drive.google.com/drive/folders/${formData.image}`
     form.append('name', formData.name);
     form.append('description', formData.description);
     form.append('category', formData.category);
@@ -156,7 +158,7 @@ const ProductForm = () => {
     form.append('style', formData.style);
     form.append('price', formData.price);
     form.append('status', formData.status);
-    form.append('image', formData.image);
+    form.append('image', URL);
 
     try {
       const response = await axios.post('http://localhost:8081/products', form, {
@@ -355,11 +357,32 @@ const ProductForm = () => {
       </label> */}
 
 
-
+{/* 
       <label>
         Image:
         <input type="file" name="image" onChange={handleImageChange} />
-      </label>
+      </label> */}
+
+      <div className="col-span-full py-3">
+        <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+          Images:
+        </label>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Please upload all photos (front and back, in clear natural light, showing any possible defects) to a <a href="https://www.google.com/drive/" className="text-red-700 hover:text-red-500 hover:underline font-bold">Google Drive folder</a>.</p> 
+        <p className="mt-3 text-sm leading-6 text-gray-600">e.g. <a href="https://drive.google.com/drive/folders/1DODTsr8lxk3szSdpexTIiYD7C5W_RGVk?usp=sharing" className="text-red-700 hover:text-red-500 hover:underline">https://drive.google.com/drive/folders/1DODTsr8lxk3szSdpexTIiYD7C5W_RGVk?usp=sharing</a></p> 
+        <div className="mt-2">
+          <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">https://drive.google.com/drive/folders/</span>
+                <input
+                  type="text"
+                  name="image"
+                  id="image"
+                  value={formData.image}
+                  onChange={handleInputChange}
+                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                />
+              </div>
+        </div>
+      </div>
 
       {/* Terms and Conditions Checkbox */}
       <div className="mt-8 flex justify-between items-center">
