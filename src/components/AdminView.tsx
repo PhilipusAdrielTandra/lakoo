@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductList from './ProductList';
 
@@ -6,19 +6,19 @@ function AdminView() {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
-
+  console.log(users);
   const history = useNavigate();
 
   const handleSignOut = () => {
     // Clear the access token from localStorage
     localStorage.removeItem('token');
-    
+
     // Redirect to the login page
     history('/admin');
   };
 
   useEffect(() => {
-    // ----------- Function to check if the user is an admin
+    // Function to check if the user is an admin
     const checkAdminStatus = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -58,8 +58,7 @@ function AdminView() {
       }
     };
 
-    // ----------- Function to fetch data from backend
-  
+    // Function to fetch data from backend
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -68,7 +67,7 @@ function AdminView() {
           return;
         }
 
-        const response = await fetch('http://localhost:8081/products-2', { // Adjust the URL as per your API
+        const response = await fetch('http://localhost:8081/products-2', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -81,15 +80,14 @@ function AdminView() {
           // Handle errors
           console.error('Error fetching products:', response.statusText);
         }
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      };
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
 
- 
     checkAdminStatus();
     fetchProducts();
-    }, [history]);
+  }, [history]);
 
   return (
     <div>
@@ -104,14 +102,17 @@ function AdminView() {
       <div className="flex justify-between items-center p-4 bg-black">
         {/* LOGO */}
         <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-5 w-auto"
-                    src="src/assets/images/logotextred.png"
-                    alt="Lakoo"
-                  />
+          <img
+            className="h-5 w-auto"
+            src="src/assets/images/logotextred.png"
+            alt="Lakoo"
+          />
         </div>
         <h1 className="text-xl font-semibold text-white">Admin Dashboard</h1>
-        <button onClick={handleSignOut} className="text-sm bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-3 rounded">
+        <button
+          onClick={handleSignOut}
+          className="text-sm bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-3 rounded"
+        >
           Sign Out
         </button>
       </div>
@@ -123,7 +124,6 @@ function AdminView() {
           <ProductList products={products} />
         </div>
       </div>
-
     </div>
   );
 }

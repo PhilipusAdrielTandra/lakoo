@@ -1,78 +1,80 @@
-import React, { useState } from 'react';
-import clsx from "clsx";
+import { useState, FC } from 'react';
+import clsx from 'clsx';
 
-const updateProductStatus = async (productId, newStatus) => {
-    try {
-        const response = await fetch(`/products/edit/status/${productId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include auth token if needed
-            },
-            body: JSON.stringify({ status: newStatus }),
-        });
+interface Product {
+  _id: string;
+  name: string;
+  createdAt: string;
+  username: string;
+  status: string;
+  description: string;
+  brand: string;
+  condition: string;
+  style: string;
+  price: string;
+  img: string;
+}
 
-        if (response.ok) {
-            console.log('Status updated successfully');
-        } else {
-            console.error('Failed to update status');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};
+interface ModalProps {
+  product: Product;
+  onClose: () => void;
+}
 
-const Modal = ({ product, onClose }) => {
-    const [statusRejected, setStatusRejected] = useState(product.status === 'Rejected');
-    const [statusPending, setStatusPending] = useState(product.status === 'Pending');
-    const [statusAccepted, setStatusAccepted] = useState(product.status === 'Accepted');
+interface ProductItemProps {
+  product: Product;
+}
 
-    const handleStatusChange = (status) => {
-        // Reset all statuses
-        setStatusRejected(false);
-        setStatusPending(false);
-        setStatusAccepted(false);
-
-        // Set the selected status
-        if (status === 'Rejected') {
-            setStatusRejected(true);
-        } else if (status === 'Pending') {
-            setStatusPending(true);
-        } else if (status === 'Accepted') {
-            setStatusAccepted(true);
-        }
+const Modal: FC<ModalProps> = ({ product, onClose }) => {
+    const [statusRejected, setStatusRejected] = useState<boolean>(product.status === 'Rejected');
+    const [statusPending, setStatusPending] = useState<boolean>(product.status === 'Pending');
+    const [statusAccepted, setStatusAccepted] = useState<boolean>(product.status === 'Accepted');
+  
+    const handleStatusChange = (status: string) => {
+      // Reset all statuses
+      setStatusRejected(false);
+      setStatusPending(false);
+      setStatusAccepted(false);
+  
+      // Set the selected status
+      if (status === 'Rejected') {
+        setStatusRejected(true);
+      } else if (status === 'Pending') {
+        setStatusPending(true);
+      } else if (status === 'Accepted') {
+        setStatusAccepted(true);
+      }
     };
-
+  
     const handleSaveChanges = async () => {
-        // Call your API endpoint to update the status
-
-        let updatedStatus = '';
-        if (statusRejected) updatedStatus = 'Rejected';
-        if (statusPending) updatedStatus = 'Pending';
-        if (statusAccepted) updatedStatus = 'Accepted';
-
-        try {
-            const response = await fetch(`http://localhost:8081/products/edit/status/${product._id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
-                body: JSON.stringify({ status: updatedStatus })
-            });
-
-            if (response.ok) {
-                // Handle successful update
-                console.log('Status updated successfully');
-                window.location.reload();
-                
-            } else {
-                // Handle errors
-                console.error('Failed to update status');
-            }
-        } catch (error) {
-            console.error('Error:', error);
+      // Call your API endpoint to update the status
+  
+      let updatedStatus = '';
+      if (statusRejected) updatedStatus = 'Rejected';
+      if (statusPending) updatedStatus = 'Pending';
+      if (statusAccepted) updatedStatus = 'Accepted';
+  
+      try {
+        const response = await fetch(`http://localhost:8081/products/edit/status/${product._id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify({ status: updatedStatus })
+        });
+  
+        if (response.ok) {
+          // Handle successful update
+          console.log('Status updated successfully');
+          window.location.reload();
+  
+        } else {
+          // Handle errors
+          console.error('Failed to update status');
         }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     };
 
     return (
@@ -156,11 +158,11 @@ const Modal = ({ product, onClose }) => {
     );
 };
 
-export default function ProductItem({ product }) {    
-    const [showModal, setShowModal] = useState(false);
-
+const ProductItem: FC<ProductItemProps> = ({ product }) => {
+    const [showModal, setShowModal] = useState<boolean>(false);
+  
     const toggleModal = () => {
-        setShowModal(!showModal);
+      setShowModal(!showModal);
     };
 
     return (
@@ -197,3 +199,4 @@ export default function ProductItem({ product }) {
         // </div>
     )
 }
+export default ProductItem;

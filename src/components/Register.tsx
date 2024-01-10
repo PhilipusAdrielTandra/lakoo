@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom'; 
 import { NumericFormat } from 'react-number-format';
 import Select from 'react-select';

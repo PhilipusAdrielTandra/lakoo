@@ -1,6 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-import lakooSad from "../assets/images/lakoosad.png";
-
 function NotFound() {
   
   return (
