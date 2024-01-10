@@ -331,14 +331,14 @@ app.get('/products-2', authenticateAdminToken, async (req, res) => {
 });
 
 
-app.put('/products/:productId/status', authenticateAdminToken, async (req, res) => {
+app.put('/products/edit/status/:productId', authenticateAdminToken, async (req, res) => {
     const { productId } = req.params;
     const { status } = req.body;
 
     try {
         // Update the product status in the database
         await db.collection("products").updateOne(
-            { _id: productId },
+            { _id: new ObjectId(productId) },
             { $set: { status: status } }
         );
 
