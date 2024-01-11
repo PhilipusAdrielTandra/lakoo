@@ -31,6 +31,7 @@ const style_opt = [
 ];
 
 const brand_opt = [
+  { value: 'no-brand', label: 'No Brand' },
   { value: 'gucci', label: 'Gucci' },
   { value: 'dickies', label: 'Dickies' },
   { value: 'adidas', label: 'Adidas' },
