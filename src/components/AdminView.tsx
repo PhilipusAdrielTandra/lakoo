@@ -121,7 +121,7 @@ function AdminView() {
       <div className="mt-4 p-4 max-w-4xl mx-auto shadow-lg bg-white">
         {/* Products Table Container */}
         <div className='overflow-auto'>
-          <h2 className="text-lg font-semibold mb-2">Products</h2>
+          <h2 className="text-lg font-semibold mb-2">List of Applications</h2>
           <ProductList products={products} />
         </div>
       </div>

@@ -119,6 +119,7 @@ const Modal: FC<ModalProps> = ({ product, onClose }) => {
                             <th>Status</th>
                             <label className="flex items-center space-x-2 py-2 px-2">
                                 <input 
+                                    className="m-2"
                                     type="checkbox" 
                                     checked={statusRejected} 
                                     onChange={() => handleStatusChange('Rejected')}
@@ -128,6 +129,7 @@ const Modal: FC<ModalProps> = ({ product, onClose }) => {
 
                             <label className="flex items-center space-x-2 py-2 px-2">
                                 <input 
+                                    className="m-2"
                                     type="checkbox" 
                                     checked={statusAccepted} 
                                     onChange={() => handleStatusChange('Accepted')}
@@ -142,7 +144,7 @@ const Modal: FC<ModalProps> = ({ product, onClose }) => {
                         <tr>
                             <th>Images</th>
                             <td>
-                                <a href={product.image} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">
+                                <a href={product.image} target="_blank" rel="noopener noreferrer" className="text-red-700 hover:text-red-900">
                                     View Image
                                 </a>
                             </td>
@@ -202,10 +204,7 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
                     {product.status}
                 </td>
                 <td className="p-2">
-                    {/* <Link to={`/detail/${product._id}`} className="btn btn-secondary text-xs">
-                        Detail
-                    </Link> */}
-                    <button onClick={toggleModal} className="btn btn-secondary text-xs">
+                    <button onClick={toggleModal} className="flex justify-center rounded-md bg-red-700 px-3 py-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-800">
                         Detail
                     </button>
                     {showModal && (

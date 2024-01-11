@@ -13,7 +13,7 @@ interface Product {
     condition: string;
     style: string;
     price: string;
-    img: string;
+    image: string;
     address: string;
     state: string;
     city: string;

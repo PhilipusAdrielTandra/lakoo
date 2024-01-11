@@ -15,7 +15,6 @@ function App() {
     <Router>
       <div>
         <Routes>
-          {/* <Route path="/" element={<Landing/>}/> */}
           <Route path="/form" element={<><Header /><Form /></>}/>
           <Route path="/success" element={<><Success/></>}/>
           <Route path="/" element={<Signin/>}/>
