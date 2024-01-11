@@ -26,7 +26,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
         let newSlide = this.state.currentSlide === CarouselData.length - 1 ? 0 : this.state.currentSlide + 1
         this.setState({currentSlide: newSlide})
       }
-    }, 5000)
+    }, 3000)
   }
 
   //changing to the next slide
