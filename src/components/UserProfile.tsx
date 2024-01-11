@@ -2,14 +2,22 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch user data from the backend
     const fetchData = async () => {
       try {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            navigate('/');
+            return;
+          }
+
         const response = await axios.get('http://localhost:8081/users/profile', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
