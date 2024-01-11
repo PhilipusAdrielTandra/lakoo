@@ -7,6 +7,7 @@ const UserProfile = () => {
   const userId = 'user_id_here'; // Replace with the actual user ID
   const [profile, setProfile] = useState([]);
   const [formData, setFormData] = useState({
+    _id: '',
     address: '',
     number: '',
     firstname: '',
@@ -40,6 +41,7 @@ const UserProfile = () => {
             setProfile(profileData);
             // Update the formData state with the fetched profile data
             setFormData({
+                _id: profileData._id || '',
                 address: profileData.address || '',
                 number: profileData.number || '',
                 firstname: profileData.firstname || '',
@@ -110,9 +112,8 @@ const UserProfile = () => {
   : [];
 
   const updateUser = async () => {
-
     try {
-      const response = await fetch(`http://localhost:8081/users/profile}`, {
+      const response = await fetch(`http://localhost:8081/users/${formData._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -203,7 +204,7 @@ return (
                 </div>
 
             <div>
-                <form className="space-y-6" action="#" method="POST" onSubmit={updateUser}>
+                <form className="space-y-6" onSubmit={updateUser}>
                         <div>
                             <div className="flex items-center justify-between mt-4">
                             <label htmlFor="firstname" className="block text-sm font-medium leading-6 text-gray-900">
@@ -385,9 +386,9 @@ return (
                     
                     <div className="flex justify-center">
                         <button
-                        type="submit"
                         className="flex justify-center rounded-md bg-red-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         style={{ width: '100%'}}
+                        type="submit"
                         >
                         Update Account
                         </button>
