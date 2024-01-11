@@ -206,7 +206,7 @@ const ProductForm = () => {
        
       <div className="col-span-full">
         <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-          Name
+          Name of item
         </label>
         <div className="mt-2">
           <textarea
@@ -215,6 +215,7 @@ const ProductForm = () => {
             rows={1} 
             className="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
             defaultValue={''}
+            required
             value={formData.name}
             onChange={handleInputChange}
           />
@@ -237,6 +238,7 @@ const ProductForm = () => {
             rows={3}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
             defaultValue={''}
+            required
             value={formData.description}
             onChange={handleInputChange}
           />
@@ -261,6 +263,7 @@ const ProductForm = () => {
               className="basic-multi-select"
               classNamePrefix="select"
               maxMenuHeight={150}
+              required
               closeMenuOnSelect={false}
               onChange={(selectedOption) => handleSelectChange("category", selectedOption)}
             />
@@ -283,6 +286,7 @@ const ProductForm = () => {
               className="basic-multi-select"
               classNamePrefix="select"
               maxMenuHeight={150}
+              required
               closeMenuOnSelect={false}
               onChange={(selectedOption) => handleSelectChange("brand", selectedOption)}
             />
@@ -305,6 +309,7 @@ const ProductForm = () => {
             className="basic-multi-select"
             classNamePrefix="select"
             maxMenuHeight={150}
+            required
             closeMenuOnSelect={false}
             onChange={(selectedOption) => handleSelectChange("condition", selectedOption)}
           />  
@@ -328,6 +333,7 @@ const ProductForm = () => {
             className="basic-multi-select"
             classNamePrefix="select"
             maxMenuHeight={150}
+            required
             closeMenuOnSelect={false}
             onChange={(selectedOption) => handleSelectChange("style", selectedOption)}
           />
@@ -357,6 +363,7 @@ const ProductForm = () => {
                 placeholder="0,00"
                 value={formData.price}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <p className="mt-3 text-sm leading-6 text-gray-600">This is only a starting price. Admins can negotiate based on the quality.</p>
@@ -388,6 +395,7 @@ const ProductForm = () => {
                   type="text"
                   name="image"
                   id="image"
+                  required
                   value={formData.image}
                   onChange={handleInputChange}
                   className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"

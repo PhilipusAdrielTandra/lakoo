@@ -6,6 +6,7 @@ interface Product {
   name: string;
   createdAt: string;
   username: string;
+  number: string;
   status: string;
   description: string;
   brand: string;
@@ -175,6 +176,9 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
                 </td>
                 <td className="p-2">
                     {product.username} 
+                </td>
+                <td className="p-2">
+                    {product.number} 
                 </td>
                 <td className="p-2">
                     {product.status}

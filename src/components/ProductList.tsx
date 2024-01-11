@@ -6,6 +6,7 @@ interface Product {
     name: string;
     createdAt: string;
     username: string;
+    number: string;
     status: string;
     description: string;
     brand: string;
@@ -29,6 +30,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                             <th className="p-2">Name</th>
                             <th className="p-2">Date/Time</th>
                             <th className="p-2">Username</th>
+                            <th className="p-2">Phone number</th>
                             <th className="p-2">Status</th>
                             <th className="p-2">Details</th>
                         </tr>
