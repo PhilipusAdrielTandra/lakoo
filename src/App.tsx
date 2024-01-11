@@ -21,7 +21,7 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="/admin" element={<AdminSignin/>}/>
           <Route path="/adminview" element={<AdminView/>}/>
-          <Route path="/profile" element={<UserProfile/>}/>
+          <Route path="/updateprofile" element={<UserProfile/>}/>
           <Route path="*" Component={NotFound}/>
         </Routes>
       </div>
