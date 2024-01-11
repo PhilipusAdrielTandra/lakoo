@@ -117,6 +117,44 @@ app.post('/users/login', async (req, res) => {
     }
 });
 
+app.put('/users/:userId', authenticateToken, async (req, res) => {
+    const { userId } = req.params;
+    const { address, number, firstname, lastname, city, state, zip } = req.body;
+
+    try {
+        const authenticatedUser = await db.collection("users").findOne({ _id: new ObjectId(req.user.userId) });
+
+        if (authenticatedUser) {
+            const result = await db.collection("users").updateOne(
+                { _id: new ObjectId(userId) },
+                {
+                    $set: {
+                        address,
+                        number,
+                        firstname,
+                        lastname,
+                        city,
+                        state,
+                        zip
+                    }
+                }
+            );
+
+            if (result.modifiedCount === 1) {
+                res.json({ success: true, message: 'User updated successfully' });
+            } else {
+                res.status(404).json({ error: 'User not found or you do not have permission to update it' });
+            }
+        } else {
+            res.status(403).json({ error: 'Forbidden: You do not have permission to update this user' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 app.post('/users/refresh-token', async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
@@ -338,7 +376,7 @@ app.get('/products-2', authenticateAdminToken, async (req, res) => {
 });
 
 
-app.put('/products/edit/status/:productId', authenticateAdminToken, async (req, res) => {
+app.put('/products/edit/status/:productId', authenticateToken, async (req, res) => {
     const { productId } = req.params;
     const { status } = req.body;
 
@@ -399,6 +437,23 @@ app.delete('/products/:productId', authenticateAdminToken, async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+app.get('/users/profile', authenticateToken, async (req, res) => {
+    try {
+        const userId = new ObjectId(req.user.userId);
+        const userProfile = await db.collection("users").findOne({ _id: userId });
+
+        if (userProfile) {
+            res.json(userProfile);
+        } else {
+            res.status(404).json({ error: 'User profile not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 
 //-------------------- AUTHENTICATION STUFF -------------------- 
 function authenticateToken(req, res, next) {
