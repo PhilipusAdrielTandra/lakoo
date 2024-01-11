@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Swipe from "react-easy-swipe";
 import { CarouselData } from "../assets/CarouselData";
@@ -53,22 +53,13 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   };
 
   render() {
-    console.log("CarouselData:", CarouselData);
     return (
       <div className="">
         <div className="w-screen h-auto flex overflow-hidden relative">
 
-        {/* left arrow */}
-        <div className="absolute left-8 top-1/2 transform -translate-y-1/2 flex items-center">
-          <AiOutlineLeft onClick={this.prevSlide} className='text-3xl text-white cursor-pointer' />
-        </div>
-
-        {/* right arrow */}
-        <div className="absolute w-100 left-80 ml-20 top-1/2 transform -translate-y-1/2 flex items-center">
-          <div className="ml-8">
-          <AiOutlineRight onClick={this.nextSlide} className='text-3xl text-white cursor-pointer ml-20' />
-          </div>
-        </div>
+        {/* left and right arrows to change slides on click */}
+        <AiOutlineLeft onClick={this.prevSlide} className='absolute left-0 text-3xl inset-y-1/2 text-white cursor-pointer' />
+        <AiOutlineRight onClick={this.nextSlide} className='absolute right-0 text-3xl inset-y-1/2 text-white cursor-pointer' />
         
         <Swipe onSwipeLeft={this.nextSlide} onSwipeRight={this.prevSlide}>  
           {CarouselData.map((slide : any, index : number) => {
@@ -99,7 +90,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
           {/* adding the dots to navigate the carousel */}
           <div className="ml-8 absolute flex justify-center bottom-0">
-            {CarouselData.map((_, index) => {
+            {CarouselData.map((element, index) => {
               return (
                 <div
                   className={

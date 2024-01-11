@@ -1,14 +1,12 @@
+// CarouselData.ts
 export const CarouselData = [
-    {
-      image:
-      "https://drive.google.com/uc?export=view&id=1uTw8an5Zw0WTlTv_dDFJA29ntR8i5oZF",
-    },
-    {
-      image:
-      "https://drive.google.com/uc?export=view&id=1gofaZH1EuagK9lJgEkk61nZUgGk4FjwD",
-    },
-    {
-      image:
-      "https://drive.google.com/uc?export=view&id=13skTZZHxGTlq5Onx3QScuvHovzMPxnpH",
-    },
-  ];
+  {
+    image: "/images/carousel1.png", // Assuming the image is in the public/images folder
+  },
+  {
+    image: "/images/carousel2.png",
+  },
+  {
+    image: "/images/carousel3.png",
+  },
+];
