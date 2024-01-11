@@ -92,7 +92,7 @@ export default function Register() {
     }
 
     try {
-      const response = await fetch('http://3.27.136.233:8081/users', {
+      const response = await fetch('http://localhost:8081/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
