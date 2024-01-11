@@ -120,8 +120,8 @@ export default function Register() {
       <>
         {/* BIG CONTAINER */}
         <div className="bg-cover bg-no-repeat bg-center h-screen" style={{backgroundImage: 'url("src/assets/images/background.jpeg")'}}>
-        <div className="flex items-center justify-center h-screen ">
-            <div className="mx-auto lg:max-w-screen-xl rounded-lg bg-white shadow-lg md:shadow-xl" style={{ height: '90%', width: '55%'}}>
+        <div className="flex items-center justify-center h-screen">
+            <div className="mx-auto overflow-auto lg:max-w-screen-xl rounded-lg bg-white shadow-lg md:shadow-xl" style={{ height: '90%', width: '55%'}}>
                 {/* TITLE */}
                 <div className="flex min-h-full flex-1 flex-col px-6 py-6 lg:px-8">
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -251,11 +251,13 @@ export default function Register() {
 
                                 <div className="mt-2 flex">
                                     <NumericFormat 
+                                        id="number"
+                                        name="number"
                                         value={formData.number}
                                         prefix="+62" 
                                         type="tel"
                                         maxLength={14}
-                                        onValueChange={() => handleChange}
+                                        onChange={handleChange}
                                         required
                                         className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
