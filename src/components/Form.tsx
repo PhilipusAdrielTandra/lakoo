@@ -51,6 +51,7 @@ const brand_opt = [
   { value: 'fendi', label: 'Fendi' },
   { value: 'converse', label: 'Converse' },
   { value: 'prada', label: 'Prada' },
+  { value: 'vlone', label: 'VLONE' },
   { value: 'under-armour', label: 'Under Armour' },
   // Add more options as needed
 ]

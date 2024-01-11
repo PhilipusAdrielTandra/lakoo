@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Swipe from "react-easy-swipe";
 import { CarouselData } from "../assets/CarouselData";

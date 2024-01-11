@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import AdminSignin from "./components/AdminSignin"
 import AdminView from './components/AdminView'
 import NotFound from './components/NotFound.tsx';
+import UserProfile from './components/UserProfile.tsx';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="/admin" element={<AdminSignin/>}/>
           <Route path="/adminview" element={<AdminView/>}/>
+          <Route path="/profile" element={<UserProfile/>}/>
           <Route path="*" Component={NotFound}/>
         </Routes>
       </div>
