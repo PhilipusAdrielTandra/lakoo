@@ -30,20 +30,20 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
     if (products && products.length > 0) {
         return (
             <div className='w-full flex flex-col items-center justify-center '>
-                <table className="w-full text-left">
+                <table className="w-full text-center">
                     <thead>
                         <tr>
-                            <th className="p-2">Name</th>
-                            <th className="p-2">Date/Time</th>
-                            <th className="p-2">Username</th>
-                            <th className="p-2">Phone number</th>
-                            <th className="p-2">Status</th>
-                            <th className="p-2">Details</th>
+                            <th className="p-5">Name</th>
+                            <th className="p-5">Date/Time</th>
+                            <th className="p-5">Username</th>
+                            <th className="p-5">Phone Number</th>
+                            <th className="p-5">Status</th>
+                            <th className="p-5">Details</th>
                         </tr>
                     </thead>
                     <tbody>
                         {products.map(product => (
-                            <ProductItem key={product._id} product={product} />
+                            <ProductItem key={product._id} product={product}/>
                         ))}
                     </tbody>
                 </table>

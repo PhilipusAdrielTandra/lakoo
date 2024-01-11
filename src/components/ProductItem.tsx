@@ -50,6 +50,8 @@ const Modal: FC<ModalProps> = ({ product, onClose }) => {
       } else if (status === 'Accepted') {
         setStatusAccepted(true);
       }
+
+      
     };
   
     const handleSaveChanges = async () => {
@@ -186,24 +188,37 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
       setShowModal(!showModal);
     };
 
+    const getStatusColor = () => {
+        switch (product.status) {
+          case 'Accepted':
+            return 'text-green-700';
+          case 'Rejected':
+            return 'text-red-700';
+          case 'Pending':
+            return 'text-yellow-400';
+          default:
+            return 'text-gray-500'; // Add a default color if status is not recognized
+        }
+    };
+
     return (
         <tr className="border-b">
-                <td className={clsx('p-2')}>
+                <td className={clsx('p-5')}>
                     {product.name}
                 </td>
-                <td className="p-2">
+                <td className="p-5">
                     {product.createdAt} 
                 </td>
-                <td className="p-2">
+                <td className="p-5">
                     {product.username} 
                 </td>
-                <td className="p-2">
+                <td className="p-5">
                     {product.number} 
                 </td>
-                <td className="p-2">
+                <td className={clsx('p-5', getStatusColor())}>
                     {product.status}
                 </td>
-                <td className="p-2">
+                <td className="p-5">
                     <button onClick={toggleModal} className="flex justify-center rounded-md bg-red-700 px-3 py-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-800">
                         Detail
                     </button>
