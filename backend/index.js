@@ -314,10 +314,16 @@ app.get('/products-2', authenticateAdminToken, async (req, res) => {
                         condition: 1,
                         style: 1,
                         price: 1,
-                        img: 1,
+                        image: 1,
                         userId: 1,
                         username: "$userDetails.username", // include username
                         number:"$userDetails.number",
+                        address:"$userDetails.address",
+                        city:"$userDetails.city",
+                        state:"$userDetails.state",
+                        zip:"$userDetails.zip",
+                        firstname:"$userDetails.firstname",
+                        lastname:"$userDetails.lastname",
                         createdAt: 1,
                         status: 1,
                     }

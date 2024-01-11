@@ -14,6 +14,12 @@ interface Product {
     style: string;
     price: string;
     img: string;
+    address: string;
+    state: string;
+    city: string;
+    zip: string;
+    firstname: string;
+    lastname: string;
 }
 
 interface ProductListProps {

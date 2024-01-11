@@ -405,19 +405,30 @@ const ProductForm = () => {
       </div>
 
       {/* Terms and Conditions Checkbox */}
-      <div className="mt-8 flex justify-between items-center">
-        <label className="flex items-center space-x-2">
-            <input 
-                type="checkbox" 
-                checked={termsAccepted} 
-                onChange={handleTermsChange}
-                className="form-checkbox h-5 w-5 text-red-600 mr-3" 
-            />
-            <span className="text-sm text-gray-700">
-                I accept that the information is correct and I give consent to provide information.
-            </span>
-        </label>
-        <div className="flex items-center gap-x-6">
+      <div className="mt-8 flex flex-col justify-between items-center space-y-8">
+
+        {/* Callout box */}
+          <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded w-full text-sm">
+              <p className="font-semibold">Reminder</p>
+              <p>Upon submission, please be advised that your request will undergo a processing period of up to three business days. For subsequent updates and further information, we will be in touch via text message.</p>
+          </div>
+        
+        {/* Consent checkbox and Submit button in a flex row */}
+        <div className="flex justify-between items-center w-full">
+            {/* Consent checkbox */}
+            <label className="flex items-center space-x-2">
+                <input 
+                    type="checkbox" 
+                    checked={termsAccepted} 
+                    onChange={handleTermsChange}
+                    className="form-checkbox h-5 w-5 text-red-600" 
+                />
+                <span className="text-sm text-gray-700">
+                    I accept that the information is correct and I give consent to provide information.
+                </span>
+            </label>
+
+            {/* Submit button */}
             <button
                 type="submit"
                 className="rounded-md bg-red-600 px-10 py-3 text-sm font-semibold text-white shadow-sm hover:bg-red-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

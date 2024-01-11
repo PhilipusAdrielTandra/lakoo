@@ -13,7 +13,13 @@ interface Product {
   condition: string;
   style: string;
   price: string;
-  img: string;
+  image: string;
+  address: string;
+  state: string;
+  city: string;
+  zip: string;
+  firstname: string;
+  lastname: string;
 }
 
 interface ModalProps {
@@ -81,10 +87,10 @@ const Modal: FC<ModalProps> = ({ product, onClose }) => {
     return (
         <div className="modal-backdrop">
             <div className="modal-content">
-                <h3  className="text-center mb-3 text-xl font-bold">{product.name}</h3>
+                <h3  className="text-center text-xl font-bold">{product.name}</h3>
 
                 <table className='table-detail'>
-                    <tbody>
+                    <tbody className='text-sm'>
                         <tr>
                             <th>ID</th>
                             <td>{product._id}</td>
@@ -111,7 +117,7 @@ const Modal: FC<ModalProps> = ({ product, onClose }) => {
                         </tr>
                         <tr>
                             <th>Status</th>
-                            <label className="flex items-center space-x-2">
+                            <label className="flex items-center space-x-2 py-2 px-2">
                                 <input 
                                     type="checkbox" 
                                     checked={statusRejected} 
@@ -120,7 +126,7 @@ const Modal: FC<ModalProps> = ({ product, onClose }) => {
                                 Rejected
                             </label>
 
-                            <label className="flex items-center space-x-2">
+                            <label className="flex items-center space-x-2 py-2 px-2">
                                 <input 
                                     type="checkbox" 
                                     checked={statusAccepted} 
@@ -135,7 +141,19 @@ const Modal: FC<ModalProps> = ({ product, onClose }) => {
                         </tr>
                         <tr>
                             <th>Images</th>
-                            <td>{product.img}</td>
+                            <td>
+                                <a href={product.image} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">
+                                    View Image
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Name of customer</th>
+                            <td>{product.firstname + ' ' + product.lastname}</td>
+                        </tr>
+                        <tr>
+                            <th>Address of customer</th>
+                            <td>{product.address + ', ' + product.city + ', ' + product.state + ', ' + product.zip}</td>
                         </tr>
                     </tbody>
                 </table>
