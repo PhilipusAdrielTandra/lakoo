@@ -19,10 +19,13 @@ export default function Success() {
                   src="src/assets/images/thankyou.png"
                   alt="Thank you for choosing us image"
                 />
-                <div className="mt-5">
+                <p>
+
+                </p>
+                <div className="mt-5 flex justify-center">
                     <button
                       onClick={handleReturn}
-                      className="flex w-full justify-center rounded-md bg-red-800 px-3 py-1.5 text-xl font-semibold leading-6 text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      className="flex w-1/2 justify-center rounded-md bg-red-800 px-3 py-1.5 text-xl font-semibold leading-6 text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                       Return
                     </button>
