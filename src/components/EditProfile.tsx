@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { NumericFormat } from 'react-number-format';
 import Select from 'react-select';
 
 const UserProfile = () => {
   const userId = 'user_id_here'; // Replace with the actual user ID
+  const [profile, setProfile] = useState([]);
   const [formData, setFormData] = useState({
     username:"",
     address: '',
@@ -17,12 +18,52 @@ const UserProfile = () => {
     zip: '',
   });
 
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    // Function to fetch data from backend
+    const fetchProfileData = async () => {
+        try {
+          const token = localStorage.getItem('accessToken');
+          if (!token) {
+            navigate('/');
+            return;
+          }
+  
+          const response = await fetch('http://localhost:8081/profile', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+  
+          if (response.ok) {
+            const profileData = await response.json();
+            console.log(profileData);
+            setProfile(profileData);
+            // Update the formData state with the fetched profile data
+            setFormData({
+                username: profileData.username || '',
+                address: profileData.address || '',
+                number: profileData.number || '',
+                password: '', // Assuming you don't want to pre-fill the password field
+                firstname: profileData.firstname || '',
+                lastname: profileData.lastname || '',
+                city: profileData.city || '',
+                state: profileData.state || '',
+                zip: profileData.zip || '',
+            });
+        }
+            else {
+            // Handle errors
+            console.error('Error fetching profile:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
 
-  const getTokenFromLocalStorage = () => {
-    // Replace with your logic to retrieve the JWT token from local storage
-    return localStorage.getItem('accessToken');
-  };
+      fetchProfileData()
+  } , [navigate]);
 
   const provinceCity: {[key: string]: string[]} = {
     'Aceh': ['Banda Aceh', 'Langsa', 'Lhokseumawe','Sabang','Subulussalam'],
@@ -73,7 +114,6 @@ const UserProfile = () => {
   : [];
 
   const [confirmPass, setConfirmPass] = useState('');
-  const navigate = useNavigate();
 
   const updateUser = async () => {
     
