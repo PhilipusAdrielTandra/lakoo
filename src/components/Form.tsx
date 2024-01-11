@@ -410,7 +410,7 @@ const ProductForm = () => {
         {/* Callout box */}
           <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded w-full text-sm">
               <p className="font-semibold">Reminder</p>
-              <p>Upon submission, please be advised that your request will undergo a processing period of up to three business days. For subsequent updates and further information, we will be in touch via text message.</p>
+              <p>We will process your submission within 3 business days, please check your WhatsApp messages regularly.</p>
           </div>
         
         {/* Consent checkbox and Submit button in a flex row */}
