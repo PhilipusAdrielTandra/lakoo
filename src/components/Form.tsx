@@ -194,11 +194,11 @@ const ProductForm = () => {
     <form className="form m-11" onSubmit={handleSubmit}>
       <div className="px-24">
       <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">List an item</h2>
+          <h2 className="text-base font-semibold leading-7 text-gray-900 text-xl">List an item</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             This information will be displayed publicly so be careful what you share.
           </p>
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="col-span-full">
       {/* <label>
         Name:
@@ -253,7 +253,7 @@ const ProductForm = () => {
       </label> */}
 
       <div className="sm:col-span-3 py-3">
-        <label htmlFor="category" className="block text-sm font-medium leading-6 text-gray-900">
+        <label htmlFor="category" className="block text-sm font-medium mt-2 text-gray-900">
         Category
         </label>
         <div className="mt-2">
@@ -384,7 +384,7 @@ const ProductForm = () => {
       </label> */}
 
       <div className="col-span-full py-3">
-        <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+        <label htmlFor="name" className="block text-sm font-medium text-gray-900">
           Images:
         </label>
         <p className="mt-3 text-sm leading-6 text-gray-600">Please upload all photos (front and back, in clear natural light, showing any possible defects) to a <a href="https://www.google.com/drive/" className="text-red-700 hover:text-red-500 hover:underline font-bold">Google Drive folder</a>.</p> 

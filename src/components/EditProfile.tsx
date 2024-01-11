@@ -159,10 +159,10 @@ return (
     {/* BIG CONTAINER */}
     <div className="bg-cover bg-no-repeat bg-center h-screen" style={{backgroundImage: 'url("src/assets/images/background.jpeg")'}}>
     <div className="flex items-center justify-center h-screen ">
-        <div className="mx-auto lg:max-w-screen-xl rounded-lg bg-white shadow-lg md:shadow-xl" style={{ height: '90%', width: '55%'}}>
+        <div className="mx-auto overflow-auto lg:max-w-screen-xl rounded-lg bg-white shadow-lg md:shadow-xl" style={{ height: '90%', width: '55%'}}>
             {/* TITLE */}
             <div className="flex min-h-full flex-1 flex-col px-6 py-6 lg:px-8">
-                <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                     className="mx-auto h-20 w-auto"
                     src="src/assets/images/logo_circle.png"
@@ -433,10 +433,10 @@ return (
                     </div>
                 </form>
     
-                <p className="mt-5 text-center text-sm text-gray-200">
+                <p className="mt-5 text-center text-sm text-black">
                 Changed your mind?{' '}
                 <a href="/form" className="font-semibold leading-6 text-red-700 hover:text-red-900 hover:underline">
-                    Go back here
+                    Go back.
                 </a>
                 </p>
             </div>
