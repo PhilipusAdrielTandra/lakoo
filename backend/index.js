@@ -317,8 +317,9 @@ app.get('/products-2', authenticateAdminToken, async (req, res) => {
                         img: 1,
                         userId: 1,
                         username: "$userDetails.username", // include username
+                        number:"$userDetails.number",
                         createdAt: 1,
-                        status: 1
+                        status: 1,
                     }
                 }
             ]).toArray();
