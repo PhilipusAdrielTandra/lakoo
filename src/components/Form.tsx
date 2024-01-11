@@ -172,7 +172,7 @@ const ProductForm = () => {
     form.append('image', URL);
 
     try {
-      const response = await axios.post('http://localhost:8081/products', form, {
+      const response = await axios.post('http://3.27.136.233:8081/products', form, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

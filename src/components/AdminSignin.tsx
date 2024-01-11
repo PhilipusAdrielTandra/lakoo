@@ -12,7 +12,7 @@ export default function AdminSignin() {
     e.preventDefault();
   
     try {
-      const response = await fetch('http://localhost:8081/admins/login', {
+      const response = await fetch('http://3.27.136.233:8081/admins/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

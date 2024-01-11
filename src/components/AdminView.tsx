@@ -67,7 +67,7 @@ function AdminView() {
           return;
         }
 
-        const response = await fetch('http://localhost:8081/products-2', {
+        const response = await fetch('http://3.27.136.233:8081/products-2', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

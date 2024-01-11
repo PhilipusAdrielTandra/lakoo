@@ -54,7 +54,7 @@ const Modal: FC<ModalProps> = ({ product, onClose }) => {
       if (statusAccepted) updatedStatus = 'Accepted';
   
       try {
-        const response = await fetch(`http://localhost:8081/products/edit/status/${product._id}`, {
+        const response = await fetch(`http://3.27.136.233:8081/products/edit/status/${product._id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

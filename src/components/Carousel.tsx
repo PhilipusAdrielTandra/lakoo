@@ -53,6 +53,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   };
 
   render() {
+    console.log("CarouselData:", CarouselData);
     return (
       <div className="">
         <div className="w-screen h-auto flex overflow-hidden relative">
