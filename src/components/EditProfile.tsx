@@ -7,10 +7,8 @@ const UserProfile = () => {
   const userId = 'user_id_here'; // Replace with the actual user ID
   const [profile, setProfile] = useState([]);
   const [formData, setFormData] = useState({
-    username:"",
     address: '',
     number: '',
-    password: "",
     firstname: '',
     lastname: '',
     city: '',
@@ -30,7 +28,7 @@ const UserProfile = () => {
             return;
           }
   
-          const response = await fetch('http://localhost:8081/profile', {
+          const response = await fetch('http://localhost:8081/users/profile', {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -42,10 +40,8 @@ const UserProfile = () => {
             setProfile(profileData);
             // Update the formData state with the fetched profile data
             setFormData({
-                username: profileData.username || '',
                 address: profileData.address || '',
                 number: profileData.number || '',
-                password: '', // Assuming you don't want to pre-fill the password field
                 firstname: profileData.firstname || '',
                 lastname: profileData.lastname || '',
                 city: profileData.city || '',
@@ -113,21 +109,14 @@ const UserProfile = () => {
   }))
   : [];
 
-  const [confirmPass, setConfirmPass] = useState('');
-
   const updateUser = async () => {
-    
-    if (formData.password !== confirmPass) {
-      alert("Passwords do not match.");
-      return;
-    }
 
     try {
-      const response = await fetch(`http://localhost:8081/users/${userId}`, {
+      const response = await fetch(`http://localhost:8081/users/profile}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getTokenFromLocalStorage()}`,
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
         },
         body: JSON.stringify(formData),
       });
@@ -215,69 +204,6 @@ return (
 
             <div>
                 <form className="space-y-6" action="#" method="POST" onSubmit={updateUser}>
-                    <div className="flex justify-between mt-5">
-                    <div className="sm:mx-auto sm:max-w-sm" style={{ width: '45%' }}>
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                Username
-                            </label>
-
-                            <div className="mt-2">
-                                <input
-                                    id="username"
-                                    name="username"
-                                    type="username"
-                                    autoComplete="username"
-                                    required
-                                    value={formData.username}
-                                    onChange={handleChange}
-                                    // onChange={(e) => setUsername(e.target.value)}
-                                    className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-        
-                        <div>
-                            <div className="flex items-center justify-between mt-4">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Password
-                                </label>
-                            </div>
-                            
-                            <div className="mt-2">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    required
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    // onChange={(e) => setPassword(e.target.value)}
-                                    className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="flex items-center justify-between mt-4">
-                            <label htmlFor="confirmpass" className="block text-sm font-medium leading-6 text-gray-900">
-                                Confirm Password
-                            </label>
-                            </div>
-                            <div className="mt-2">
-                                <input
-                                    id="confirmpass"
-                                    name="confirmpass"
-                                    type="password"
-                                    autoComplete="confirmpass"
-                                    required
-                                    onChange={(e) => setConfirmPass(e.target.value)}
-                                    className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
                         <div>
                             <div className="flex items-center justify-between mt-4">
                             <label htmlFor="firstname" className="block text-sm font-medium leading-6 text-gray-900">
@@ -290,7 +216,6 @@ return (
                                 name="firstname"
                                 type="firstname"
                                 autoComplete="firstname"
-                                required
                                 value={formData.firstname}
                                 onChange={handleChange}
                                 // onChange={(e) => setFirstName(e.target.value)}
@@ -319,9 +244,7 @@ return (
                                 />
                             </div>
                         </div>
-                    </div>
-                    
-                    <div className="sm:mx-auto sm:max-w-s" style={{ width: '45%' }}>
+            
                         <div>
                             <label htmlFor="number" className="block text-sm font-medium leading-6 text-gray-900">
                                 Phone Number
@@ -459,14 +382,12 @@ return (
                                 />
                             </div>
                         </div>
-                    </div>
-                    </div>
                     
                     <div className="flex justify-center">
                         <button
                         type="submit"
                         className="flex justify-center rounded-md bg-red-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        style={{ width: '95%'}}
+                        style={{ width: '100%'}}
                         >
                         Update Account
                         </button>
@@ -481,8 +402,8 @@ return (
                 </p>
             </div>
             </div>
-        </div>
-        </div>
+            </div>
+            </div>
         </div>
   </>
   );
