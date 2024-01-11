@@ -1,68 +1,49 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+// UserProfile.js
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const UserProfileForm = () => {
-  const [formData, setFormData] = useState({
-    address: '',
-    number: '',
-    firstname: '',
-    lastname: '',
-    city: '',
-    state: '',
-    zip: '',
-  });
+const UserProfile = () => {
+  const [userData, setUserData] = useState(null);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const token = localStorage.getItem('accessToken'); // Replace with your authentication token
-    const userId = 'replace-with-the-actual-user-id'; // Replace with the actual user ID
-
-    try {
-      const response = await axios.put(
-        `http://your-api-url/users/${userId}`,
-        formData,
-        {
+  useEffect(() => {
+    // Fetch user data from the backend
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8081/users/profile', {
           headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           },
-        }
-      );
+        });
 
-      console.log('User profile updated successfully', response.data);
-      // Add any additional handling or redirection logic here
-    } catch (error) {
-      console.error('Failed to update user profile', error);
-      // Handle error, display an error message, etc.
-    }
-  };
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      {/* Add your form fields similar to ProductForm */}
-      <label>
-        Address:
-        <input
-          type="text"
-          name="address"
-          value={formData.address}
-          onChange={handleInputChange}
-        />
-      </label>
-
-      {/* Add other form fields similarly */}
-
-      <button type="submit">Update Profile</button>
-    </form>
+    <div>
+      <h1>User Profile</h1>
+      {userData ? (
+        <div>
+          <p>Username: {userData.username}</p>
+          <p>First Name: {userData.firstname}</p>
+          <p>Last Name: {userData.lastname}</p>
+          <p>Address: {userData.address}</p>
+          <p>Number: {userData.number}</p>
+          <p>City: {userData.city}</p>
+          <p>State: {userData.state}</p>
+          <p>ZIP: {userData.zip}</p>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
   );
 };
 
-export default UserProfileForm;
+export default UserProfile;

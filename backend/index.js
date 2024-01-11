@@ -432,6 +432,23 @@ app.delete('/products/:productId', authenticateAdminToken, async (req, res) => {
     }
 });
 
+app.get('/users/profile', authenticateToken, async (req, res) => {
+    try {
+        const userId = new ObjectId(req.user.userId);
+        const userProfile = await db.collection("users").findOne({ _id: userId });
+
+        if (userProfile) {
+            res.json(userProfile);
+        } else {
+            res.status(404).json({ error: 'User profile not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 //-------------------- AUTHENTICATION STUFF -------------------- 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
