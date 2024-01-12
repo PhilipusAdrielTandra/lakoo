@@ -1,17 +1,36 @@
-import { useNavigate } from 'react-router-dom';
-import { Fragment } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Fragment, useEffect, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
+
+
+const navigation = [
+  { name: 'List an item', href: '/form', current: false },
+  { name: 'Track progress', href: '/progress', current: false }
+]
+
+
 export default function Example() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSignOut = () => {
     // Clear the token from storage
     localStorage.removeItem('accessToken'); // or sessionStorage.removeItem('token');
     navigate('/'); // Replace '/login' with the path to your login page
 };
+
+  const [navItems, setNavItems] = useState(navigation);
+
+  useEffect(() => {
+    const updatedNavigation = navItems.map((item) => ({
+      ...item,
+      current: item.href === location.pathname
+    }));
+    setNavItems(updatedNavigation);
+  }, [location.pathname]);
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -21,15 +40,35 @@ export default function Example() {
     <div>
       {/* Header Section */}
       <div className="flex justify-between items-center p-4 px-16 bg-black">
+      <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
         {/* LOGO */}
-        <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-5 w-auto"
-                    src="src/assets/images/logotextred.png"
-                    alt="Lakoo"
-                  />
+          <div className="flex flex-shrink-0 items-center">
+                    <img
+                      className="h-5 w-auto"
+                      src="src/assets/images/logotextred.png"
+                      alt="Lakoo"
+                    />
+          </div>
+          <div className="hidden sm:ml-6 sm:block">
+          <div className="flex space-x-4">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => navigate(item.href)}
+                  className={`${
+                    item.current ? 'bg-red-700 text-white  hover:bg-red-800 ' : 'text-gray-300 hover:bg-gray-900 hover:text-white'
+                  } rounded-md px-3 py-2 text-sm font-medium`}
+                  aria-current={item.current ? 'page' : undefined}
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
-        <h1 className="text-xl font-semibold text-white">List an item</h1>
+        {/* <h1 className="text-xl font-semibold text-white">List an item</h1> */}
+
 
           {/* Profile dropdown */}
           <Menu as="div" className="relative ml-3">

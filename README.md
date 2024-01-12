@@ -1,6 +1,6 @@
 # Lakoo QC Web Application 🖥👔
 <p align="center">
-  <img src="https://cdn.discordapp.com/attachments/794551109523341353/1194875546442682389/Logo_1024x1024px.png?ex=65b1f191&is=659f7c91&hm=a5f6ce8662c67ad7250f3bd37c2880266ae9059e0599fc728f5e7d75eefafaf0&" alt="Alt text" width="200"/>
+  <img src="https://cdn.discordapp.com/attachments/794551109523341353/1194875546442682389/Logo_1024x1024px.png?ex=65b1f191&is=659f7c91&hm=a5f6ce8662c67ad7250f3bd37c2880266ae9059e0599fc728f5e7d75eefafaf0&" alt="logo" width="200"/>
 </p>
 
 **Lakoo** is a thrifting commerce platform and community that aims to promote sustainable fashion choices by and for GenZ. Lakoo allows sellers to consign their items to customers after a series of quality control checks to ensure customer satisfaction of the items sold on the platform. Thus, we decided to create a web application focused on the process of quality control (QC) of goods before they are approved to be listed on Lakoo's social media outlets. 
@@ -16,12 +16,12 @@
 ## Architecture 🛠
 #### Infrastructure Architecture Diagram
 <p align="center">
-  <img src="https://cdn.discordapp.com/attachments/794551109523341353/1194883269225877565/image.png?ex=65b1f8c3&is=659f83c3&hm=b1ee748e29484f6327755249ee33461b6539549feca279cf2ba1b2d18eb169f9&" alt="Alt text"/>
+  <img src="https://cdn.discordapp.com/attachments/1153333247971958826/1194908746971877456/infrastructure.png?ex=65b2107d&is=659f9b7d&hm=a89318d81ca870814389ca8130d5c18e50e0bba1804d2d14c419c625e2052520&" alt="infrastructure diagram"/>
 </p>
 
 #### Application Architecture Diagram
 <p align="center">
-  <img src="https://cdn.discordapp.com/attachments/794551109523341353/1194883327111462982/image.png?ex=65b1f8d1&is=659f83d1&hm=1d084bb08d3a88a8fcdf70dc0eff004713fee1a83a8444226172a75e32dc52ee&" alt="Alt text" />
+  <img src="https://cdn.discordapp.com/attachments/1153333247971958826/1194908748007886950/application.png?ex=65b2107d&is=659f9b7d&hm=11e40e57f93792d0ee894955b6b4392a56d4602554a0836be56c31918cddef06&" alt="application diagram" />
 </p>
 </br>
 

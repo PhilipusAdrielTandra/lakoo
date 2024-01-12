@@ -230,7 +230,7 @@ const ProductForm = () => {
 
       <div className="col-span-full">
         <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900 mt-2">
-          Description
+          Condition
         </label>
         <div className="mt-2">
           <textarea
@@ -244,7 +244,10 @@ const ProductForm = () => {
             onChange={handleInputChange}
           />
         </div>
-        <p className="mt-3 text-sm leading-6 text-gray-600">e.g. small grey Nike t-shirt, only worn a few times.</p>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Please describe the item <a className="text-red-700">size, color, wear condition, and defects</a> in detail.</p> 
+
+
+        <p className="mt-2 text-sm leading-6 text-gray-600">e.g. small grey Nike t-shirt, only worn a few times, slightly stained and torn on the back.</p>
       </div>
 
       {/* <label>
