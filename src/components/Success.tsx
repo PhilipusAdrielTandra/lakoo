@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom';
 export default function Success() {
     const navigate = useNavigate();
 
-    const handleReturn = () => {
+    const handleForm = () => {
       navigate('/form');
+    };
+
+    const handleProgress = () => {
+      navigate('/progress');
     };
 
     return (
@@ -35,13 +39,13 @@ export default function Success() {
 
                 <div className="mt-5 flex justify-center mb-5">
                     <button
-                      onClick={handleReturn}
+                      onClick={handleForm}
                       className="flex w-60 mx-5 justify-center rounded-md bg-red-700 text-white  hover:bg-red-800  px-3 pt-3 pb-3 text-xl font-semibold leading-6 text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                       List Another Item
                     </button>
                     <button
-                      onClick={handleReturn}
+                      onClick={handleProgress}
                       className="flex w-60 mx-5 justify-center rounded-md bg-red-700 text-white  hover:bg-red-800  px-3 pt-3 pb-3  text-xl font-semibold leading-6 text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                       Track Progress
