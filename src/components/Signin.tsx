@@ -28,6 +28,8 @@ export default function Signin() {
         // Use the access token for subsequent requests
         const accessToken = data.accessToken;
         localStorage.setItem('accessToken', accessToken);
+        // Store user ID in local storage
+        localStorage.setItem('userId', data.userId);
   
         // Handle login success (e.g., store the token, redirect, etc.)
         navigate('/form');

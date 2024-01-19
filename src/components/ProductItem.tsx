@@ -227,12 +227,6 @@ const ProductItem: FC<ProductItemProps> = ({ product }) => {
                     )}
                 </td>
         </tr>
-
-        // <div className="w-full flex items-center justify-between border p-2 mb-1">
-        //     {/* <div className={clsx('ps-2', { 'line-through': product.status })}>{product.name}</div>
-        //     <Link to={`/detail/${product._id}`} className='btn btn-secondary text-xs'>Detail</Link> */}
-            
-        // </div>
     )
 }
 export default ProductItem;

@@ -104,7 +104,7 @@ app.post('/users/login', async (req, res) => {
                     maxAge: 24 * 60 * 60 * 1000, // 1 day
                 });
 
-                res.json({ success: true, message: 'Login successful', accessToken, refreshToken });
+                res.json({ success: true, message: 'Login successful', accessToken, refreshToken, userId: user._id });
             } else {
                 res.status(401).json({ error: 'Invalid password' });
             }
@@ -437,6 +437,29 @@ app.delete('/products/:productId', authenticateAdminToken, async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+// Endpoint to get products by userId
+app.get('/products/user/:userId', authenticateToken, async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        // Convert userId to ObjectId if necessary
+        const objectId = new ObjectId(userId);
+
+        // Find all products that belong to the specified user
+        const userProducts = await db.collection("products").find({ userId: objectId }).toArray();
+
+        if (userProducts.length > 0) {
+            res.json(userProducts);
+        } else {
+            res.status(404).json({ message: 'No products found for this user' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 
 app.get('/users/profile', authenticateToken, async (req, res) => {
     try {
