@@ -43,7 +43,7 @@ const ProgressItem = ({ product }) => {
           </div>
           <button
             onClick={toggleExpansion}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
+            className="bg-red-700 text-white py-2 px-4 rounded hover:bg-red-900 transition duration-300"
           >
             {isExpanded ? 'Hide Details' : 'Track My Status'}
           </button>

@@ -45,8 +45,13 @@ const Progress = () => {
   }, []);
 
   return (
-      <div className="progress-page">
-        <h2 className="text-base font-semibold leading-7 text-gray-900 text-xl">List an item</h2>
+      <div className="progress-page m-11 px-24">
+        <div className="border-b border-gray-900/10 pb-5 mb-6">
+        <h2 className="text-base font-semibold leading-7 text-gray-900 text-xl mb-2">Your Applications</h2>
+        <p className="mt-1 text-sm leading-6 text-gray-600">
+            Keep track of the applications you have submitted to us!
+        </p>
+        </div>
         <ProgressList products={products} />
       </div>
   );
