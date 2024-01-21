@@ -269,7 +269,7 @@ app.delete('/users/:userId', authenticateToken, async (req, res) => {
 });
 
 app.post('/products', authenticateToken, upload.single('image'), async (req, res) => {
-    console.log('Request Body:', req.body);
+    // console.log('Request Body:', req.body);
     // console.log('Request File:', req.file);
 
     const { name, description, category, brand, condition, style, price, status, image } = req.body;
@@ -322,8 +322,8 @@ app.get('/products', authenticateAdminToken, async (req, res) => {
 });
 
 app.get('/products-2', authenticateAdminToken, async (req, res) => {
-    console.log(res)
-    console.log(req)
+    // console.log(res)
+    // console.log(req)
     const createdAt = new Date(); 
 
     try {
